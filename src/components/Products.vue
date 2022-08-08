@@ -5,13 +5,20 @@
             v-for="(product, index) in this.items" :key="index"
             class="product" :class="{inCart: isInCart(product)}" 
             >
-                <div class="product-image" :style="{backgroundImage: 'url(' + product.image +')'}"></div>
-                <h4>{{ product.title }}</h4>
-                 <ProductLikes v-bind:item='product.rating' />
-                <p class="price">{{product.price.toFixed(2)}} $</p>
-                <button v-if="!isInCart(product)" @click="addToCart(product)" >Add to cart</button>
-                <button v-else class="remove" @click="removeFromCart(product.id)" >Remove from cart</button>
-
+                <div class="product-header">
+                    <div class="product-image" :style="{backgroundImage: 'url(' + product.image +')'}"></div>
+                </div>
+                <div class="product-description">
+                    <div class="product-description-title">
+                        <h4>{{ product.title }}</h4>
+                    </div>
+                    <div class="product-description-price">
+                        <ProductLikes v-bind:item='product.rating' />
+                        <p class="price">{{product.price.toFixed(2)}} $</p>
+                        <button v-if="!isInCart(product)" @click="addToCart(product)" >Add to cart</button>
+                        <button v-else class="remove" @click="removeFromCart(product.id)" >Remove from cart</button>
+                    </div>
+                </div>
                
             </div> 
 
@@ -21,10 +28,12 @@
 <script>
 
     import { mapState } from 'vuex';
-    import ProductLikes from './ProductLikes.vue'
+    import ProductLikes from './ProductLikes.vue';
+
+    
     export default {
         name: 'Home',
-        components: { ProductLikes },
+        components: { ProductLikes},
         props:[
             'items'
         ],
@@ -58,15 +67,22 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      padding-top: 20px;
+
+      .product-header{
+        width: 100%;
+        background: #fff;
+        padding: 4px 0;
+      }
 
 
       .product {
         flex: 0 0 30%;
-        box-sizing: border-box;  
+        box-sizing: border-box;
+        max-width: 280px;  
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        padding: 16px;
+        background: #fafafa;
         margin: 8px;
-        height: auto;
         min-width: 250px;
 
         @media only screen and (max-width: 769px) {
@@ -89,11 +105,32 @@
           background-position: center;
           background-repeat: no-repeat;
         }
+
+        .product-description{
+            width: 100%;
+            height: calc(100% - 185px);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-description-title {
+            height: calc(100% - 125px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         h4 {
-          margin: 22px auto;
+          margin: 12px auto;
           font-size: 15px;
           max-width: 90%;
           font-weight: normal;
+        }
+
+        .product-description-price {
+            height: 125px;
         }
 
         p.price {

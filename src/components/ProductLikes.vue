@@ -6,7 +6,7 @@
             <img class="likes empty" src="../assets/five_stars_empty.png" alt="stars">
             <div class="likes fill"  :style="{width: likesWidth(item)}" />
         </div>
-        <span class="rates-number">({{ item.count }} avis)</span>
+        <span class="rates-number">({{ item.count }})</span>
     </div>
 </template>
 
@@ -28,16 +28,16 @@
 
 <style>
 .product-likes {
-    width: 225px;
+    width: 205px;
     align-items: center;
     font-size: 13px;
 }
 
 .rates-number {
-    margin-left: 5px;
+    margin-left: 0px;
 }
 .stars-container {
-    width: 79px ;
+    width: 80px ;
     position: relative;
 }
 

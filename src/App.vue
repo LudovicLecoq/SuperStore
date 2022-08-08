@@ -4,10 +4,11 @@
      
         <div id="nav">   
             <div class="logo">
-                <img src="./assets/store_logo.png" alt="" class="logo-img">
+                <img src="./assets/store_logo.png" alt="logo super store" class="logo-img">
             </div>
-          
-                <router-link to="/">Home</router-link> 
+<!--           
+                <router-link to="/">Home</router-link>  -->
+                <SearchBar />
                 <router-link to="/cart">
                     <div class="cart">
                         <img class="cart-img" src="./assets/cart.png" alt="cart"> {{ this.productsInCart.length }}
@@ -21,10 +22,11 @@
 
 <script>
     import { mapState } from 'vuex';
-    import Categories from './components/Categories.vue'
+    import Categories from './components/Categories.vue';
+    import SearchBar from './components/SearchBar.vue'
 
     export default {
-        components: { Categories },
+        components: { Categories, SearchBar },
         created() {
             this.$store.dispatch('loadProducts')
         }, 
@@ -55,14 +57,14 @@
 
 #nav {
     z-index: 10;
-    padding: 6px 0 3px 0;
+    padding: 6px 0 8px 0;
     position: fixed;
     height: 70px;
     top: 0;
     left: 0;
     width: 100%;
     text-align: center;
-    background-color: rgb(31, 45, 77);
+    background-color: rgb(18, 25, 33);
     color: white;
     display: flex;
     justify-content: space-between;
@@ -88,13 +90,14 @@
     position: relative;
     padding: 0;
     margin-right: 15px;
-    
+    margin-top: 27px;
+    height: 50px;    
 }
 
 .cart-img {
     position: absolute;
     max-width: 65px;
-    top: 40px;
+    top: 48px;
     left: -12px;
 }
 </style>
