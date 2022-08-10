@@ -5,12 +5,13 @@
 </template>
 
 <script>
+
     import { mapState } from 'vuex';
     import Products from '../components/Products.vue';
     export default {
 
         name: 'category',
-          components: { Products },
+        components: { Products },
         computed: mapState ([
             'selectedProducts'
         ]),
@@ -18,8 +19,8 @@
 </script>
 
 <style>
-.category-container {
-    margin-top: 110px;
-}
+    .category-container {
+        margin-top: 110px;
+    }
 
 </style>

@@ -1,26 +1,28 @@
 <template>
-  <div class="cart">
-    <div class="items">
+    <div class="cart">
+        <div class="items">
 
-      <div 
-        v-for="(product, index) in productsInCart" :key="index"
-      class="item">
-        <div class="remove" @click="removeFromCart(product.id)" >Remove item</div>
-        <div class="photo"><img :src="product.image" alt=""> </div>
-        <div class="description"> {{product.title}} </div>
-        <div class="price">
-          <span class="quantity-area">
-            <button :disabled="product.quantity <= 1" @click="product.quantity--" >-</button>
-            <span class="quantity"> {{product.quantity}} </span>
-            <button @click="product.quantity++">+</button>
-          </span>
-          <span class="amount">{{ (product.price * product.quantity).toFixed(2) }} $ </span>
+        <div 
+            v-for="(product, index) in productsInCart" :key="index"
+        class="item">
+            <div class="remove" @click="removeFromCart(product.id)" >Remove item</div>
+            <div class="photo"><img :src="product.image" alt=""> </div>
+            <div class="description"> {{product.title}} </div>
+            <div class="price">
+            <span class="quantity-area">
+                <button :disabled="product.quantity <= 1" @click="product.quantity--" >-</button>
+                <span class="quantity"> {{product.quantity}} </span>
+                <button @click="product.quantity++">+</button>
+            </span>
+            <span class="amount">{{ (product.price * product.quantity).toFixed(2) }} $ </span>
+            </div>
         </div>
-      </div>
-      <div class="total"> Total: US$ 22.30</div>
-
+            <div class="total"> Total: US$ 22.30</div>
+        </div>
+        <div class="link">
+            <router-link :to="'/payment'"><button>Passer commande</button></router-link> 
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
