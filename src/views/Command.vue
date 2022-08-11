@@ -1,9 +1,9 @@
 <template>
     <div class="command-first">
         <form class="command-form" @submit.prevent="submit">
-            <command-first-step v-bind:command='command' v-if="command.step === 0" @next-step="changeStep"/>
+            <command-first-step v-bind:command='command' v-bind:next='nextStep'  v-if="command.step === 0" @next-step="changeStep"/>
             <command-second-step v-bind:command='command'  v-if="command.step === 1" />
-            <button type="submit">Submit</button>
+            <button type="submit" v-if="command.step === 5">Submit</button>
         </form>
     </div>
 </template>
@@ -36,17 +36,22 @@ export default {
         const submit = () => {
             console.log("submit button");
             console.log(command)
-        };  
+        }; 
+        
+        const nextStep = () => {
+            command.step++;
+            console.log("nextstep");
+        }
 
         const changeStep = (user) => {
             console.log("changestep");
-            command.firstname = user.firstName;
+            user.firstName ? command.firstname = user.firstName : '';
             command.lastname = user.lastName;
             command.address = user.address;
             command.step = user.step;  
             console.log(command)
         }
-        return { command, submit, changeStep }
+        return { command, submit, changeStep, nextStep }
     }
 }
 </script>

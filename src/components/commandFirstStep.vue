@@ -7,7 +7,7 @@
         <input v-model="user.address" class="command-form-item" type="text">
         <p>{{user.address}}</p> 
 
-        <button type="button" :disabled="disabledButton" @click="nextStep">Next</button>
+        <button type="button" :disabled="disabledButton" @click="next">Next</button>
 
     </div>
 </template>
@@ -33,10 +33,14 @@ export default {
             },
             step: {
                 type: Number,
-            }
+            }    
+        },
+        next: {
+            type: Function,
+            required: true
         }
     },
-    setup (props, {emit}) {
+    setup (props) {
         const user = reactive({
             firstName: props.command.firstname,
             lastName: props.command.lastname,
@@ -55,13 +59,13 @@ export default {
             console.log("watch", user.step, newValues, oldValues);
         });
 
-        const nextStep = () => {
-            user.step = 1;
-            console.log(user.step);
-            emit("next-step", user)
-        }
+        // const nextStep = () => {
+        //     user.step = 1;
+        //     console.log(user.step);
+        //     emit("next-step", user)
+        // }
 
-        return { user, disabledButton, nextStep }
+        return { user, disabledButton }
     },
 
 }
