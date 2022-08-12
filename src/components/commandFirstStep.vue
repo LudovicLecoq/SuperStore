@@ -1,24 +1,27 @@
 <template>
     <div>
-        <input v-model="user.firstName" class="command-form-item" type="text">
-        <p>{{user.firstName}}</p> 
-        <input v-model="user.lastName" class="command-form-item" type="text">
-        <p>{{user.lastName}}</p> 
-        <input v-model="user.address" class="command-form-item" type="text">
-        <p>{{user.address}}</p> 
 
-        <button type="button" :disabled="disabledButton" @click="next">Next</button>
+        <command-input v-model="thisUser.firstName" text='text'/>
+
+        <command-input v-model="thisUser.lastName" text='text'/>
+
+        <command-input v-model="thisUser.phone" text='text'/>
+
+        <command-input v-model="thisUser.email" text='email'/>
+
+        <button type="button" :disabled="disabledButton" @click="next(thisUser, 1)">Next</button>
 
     </div>
 </template>
 
 <script>
-
+import commandInput from './atoms/commandInput.vue'
 import {  ref, toRefs, reactive, watch} from 'vue';
 export default {
-    name: 'commandSecondStep',
+    name: 'commandFirstStep',
+    components: { commandInput },
     props:{
-        command: {
+        user: {
             firstname: {
                 type: String,
                 required: true
@@ -27,7 +30,11 @@ export default {
                 type: String,
                 required: true
             },
-            address: {
+            email: {
+                type: String,
+                required: true
+            },
+            phone: {
                 type: String,
                 required: true
             },
@@ -41,31 +48,27 @@ export default {
         }
     },
     setup (props) {
-        const user = reactive({
-            firstName: props.command.firstname,
-            lastName: props.command.lastname,
-            address: props.command.address,
-            step: props.command.step
+        const thisUser = reactive({
+            firstName: props.user.firstname,
+            lastName: props.user.lastname,
+            phone: props.user.phone,
+            email: props.user.email,
         });
-        const userRefs = toRefs(user);
+        const userRefs = toRefs(thisUser);
         const disabledButton = ref(true);
 
-        watch([userRefs.firstName, userRefs.lastName, userRefs.address], function(newValues, oldValues){
-            if(user.firstName.length > 2 && user.lastName.length > 2 && user.address.length > 2){
+        watch([userRefs.firstName, userRefs.lastName, userRefs.email], function(newValues, oldValues){
+            if(thisUser.firstName.length > 2 && thisUser.lastName.length > 2 && thisUser.email.length > 2){
                 disabledButton.value = false;
-            } else if (user.firstName.length < 3 || user.lastName.length < 3 || user.address.length < 3){
+                console.log('user=>',thisUser)
+            } else if (thisUser.firstName.length < 3 || thisUser.lastName.length < 3 || thisUser.email.length < 3){
                 disabledButton.value = true;
+                
             }
-            console.log("watch", user.step, newValues, oldValues);
+            console.log("watch", newValues, oldValues);
         });
 
-        // const nextStep = () => {
-        //     user.step = 1;
-        //     console.log(user.step);
-        //     emit("next-step", user)
-        // }
-
-        return { user, disabledButton }
+        return { thisUser, disabledButton }
     },
 
 }

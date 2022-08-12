@@ -1,60 +1,68 @@
 <template>
-    <div>
+    <div class="secondstep">
    
+        <command-input v-model="thisUser.address" text='text'/>
 
+        <command-input v-model="thisUser.postalCode" text='text'/>
+
+        <command-input v-model="thisUser.city" text='text'/>
+
+        <command-input v-model="thisUser.country" text='text'/>
+
+        <button type="button" :disabled="disabledButton" @click="next(thisUser, 2)">Next</button>
     </div>
 </template>
 
 <script>
-
+import commandInput from './atoms/commandInput.vue'
 import {  ref, toRefs, reactive, watch} from 'vue';
 export default {
-    name: 'commandFirstStep',
+    name: 'commandSecondStep',
+    components: { commandInput },
     props:{
-        command: {
-            firstname: {
-                type: String,
-                required: true
-            },
-            lastname: {
-                type: String,
-                required: true
-            },
+        user: {
             address: {
                 type: String,
                 required: true
             },
-            step: {
-                type: Number,
-            }
+            postalCode: {
+                type: String,
+                required: true
+            },
+            city: {
+                type: String,
+                required: true
+            },
+            country: {
+                type: String,
+                required: true
+            },
+        },
+        next: {
+            type: Function,
+            required: true
         }
     },
-    setup (props, context) {
-        const user = reactive({
-            firstName: props.command.firstname,
-            lastName: props.command.lastname,
-            address: props.command.address,
-            step: props.command.step
+    setup (props) {
+        const thisUser = reactive({
+            address: props.user.address,
+            postalCode: props.user.postalCode,
+            city: props.user.city,
+            country: props.user.country,
         });
-        const userRefs = toRefs(user);
+        const userRefs = toRefs(thisUser);
         const disabledButton = ref(true);
 
-        watch([userRefs.firstName, userRefs.lastName, userRefs.address], function(newValues, oldValues){
-            if(user.firstName.length > 2 && user.lastName.length > 2 && user.address.length > 2){
+        watch([userRefs.address, userRefs.postalCode, userRefs.city, userRefs.country], function(newValues, oldValues){
+            if(thisUser.address.length > 5 && thisUser.postalCode.length > 4 && thisUser.city.length > 2 && thisUser.country.length > 2){
                 disabledButton.value = false;
-            } else if (user.firstName.length < 3 || user.lastName.length < 3 || user.address.length < 3){
+            } else if (thisUser.address.length < 6 || thisUser.postalCode.length < 5 || thisUser.city.length < 3 ||thisUser.country.length < 3){
                 disabledButton.value = true;
             }
-            console.log("watch", user.step, newValues, oldValues);
+            console.log("watch", newValues, oldValues);
         });
 
-        const nextStep = () => {
-            user.step = 1;
-            context.$emit( nextStep, user )
-            console.log(user.step);
-        }
-
-        return { user, disabledButton, nextStep }
+        return { thisUser, disabledButton }
     },
 
 }
