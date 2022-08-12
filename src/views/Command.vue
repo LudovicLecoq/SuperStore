@@ -25,6 +25,8 @@ export default {
     setup () {
         const command = reactive ({
             step: 0,
+            carrier:"",
+            delivery:"",
             aggrementContract: false,
             payment: "paypal",        
             paymentAccepted: false,
@@ -39,8 +41,8 @@ export default {
             postalCode: "",
             city: "",
             country: "",
-            cart: {},
-        })
+            cart: [],
+        });
 
         const submit = () => {
             console.log("submit button");
@@ -80,6 +82,6 @@ export default {
 
 <style>
     .command{
-        margin-top: 130px;
+        margin-top: 60px;
     }
 </style>

@@ -48,7 +48,9 @@
     text-align: center;
     color: #2c3e50;
     max-width: 1280px;
-    margin: 80px auto;
+    margin: 100px auto;
+    display: flex;
+    flex-direction: column;
     }
 
 .header-container {
@@ -91,13 +93,14 @@
     padding: 0;
     margin-right: 15px;
     margin-top: 27px;
-    height: 50px;    
+    height: 50px;
+    color: #f1f1f1;    
 }
 
 .cart-img {
     position: absolute;
     max-width: 65px;
-    top: 48px;
+    top: -10px;
     left: -12px;
 }
 </style>

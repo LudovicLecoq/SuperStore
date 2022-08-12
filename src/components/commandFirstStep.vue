@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="first-step">
 
         <command-input v-model="thisUser.firstName" text='text'/>
 
@@ -75,5 +75,8 @@ export default {
 </script>
 
 <style>
-
+.first-step {
+    display: flex;
+    flex-direction: column;
+}
 </style>

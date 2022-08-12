@@ -16,5 +16,7 @@ export default {
 </script>
 
 <style>
-
+.command-form-item {
+    margin-bottom: 30px;
+}
 </style>

@@ -1,21 +1,29 @@
 <template>
-    <div class="cart">
+    <div class="cart-command">
         <div class="items">
 
         <div 
             v-for="(product, index) in productsInCart" :key="index"
         class="item">
-            <div class="remove" @click="removeFromCart(product.id)" >Remove item</div>
+            
             <div class="photo"><img :src="product.image" alt=""> </div>
-            <div class="description"> {{product.title}} </div>
-            <div class="price">
-            <span class="quantity-area">
-                <button :disabled="product.quantity <= 1" @click="product.quantity--" >-</button>
-                <span class="quantity"> {{product.quantity}} </span>
-                <button @click="product.quantity++">+</button>
-            </span>
-            <span class="amount">{{ (product.price * product.quantity).toFixed(2) }} $ </span>
+            <div class="item-container">
+                <div class="item-description">
+                    <span class="description"> {{product.title}} </span>
+                
+                    <div class="quantity">
+                        
+                        <div class="quantity-area">
+                            <button :disabled="product.quantity <= 1" @click="product.quantity--" >-</button>
+                            <span class="quantity-number"> {{product.quantity}} </span>
+                            <button @click="product.quantity++">+</button>
+                        </div>
+                        <div class="remove" @click="removeFromCart(product.id)" >Remove item{{product.quantity > 1 ?"s" : ""}} </div>
+                    </div>
+                </div>
+                <span class="amount">{{ (product.price * product.quantity).toFixed(2) }} $ </span>
             </div>
+           
         </div>
             <div class="total"> Total: US$ 22.30</div>
         </div>
@@ -46,67 +54,88 @@ export default {
 
 <style lang="scss">
 
-.cart {
-    padding: 60px 0;  
+.cart-command {
+    padding: 60px 0; 
+    width: 1000px;
+
     .items {
-        max-width: 800px;
+        min-width:  800px;
+        max-width: 1800px;
         margin: auto;
     .item {
-      display: flex;
-      justify-content: space-between;
-      padding: 40px 0;
-      border-bottom: 1px solid lightgrey;
-      position: relative;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid lightgrey;
+        position: relative;
 
+    .item-container {
+        width: 90%;
+
+    }
+        .item-description {
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+        }
+
+        .quantity {
+            margin: 0 auto;
+            width: 30%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+        }
       .remove {
-        position: absolute;
-        top: 8px;
-        right: 0;
         font-size: 11px;
         text-decoration: underline;
         cursor: pointer;
       }
 
       .quantity-area {
-        margin: 8px auto;
-        height: 14px;
+            margin: 8px auto;
+            height: 14px;
 
-        button {
-          width: 16px;
-          height: 16px;
-          display: inline-flex;
-          justify-content: center;
-          align-items: center;
-          cursor: pointer;
+        .quantity-number {
+            margin: 0 5px;
         }
 
-        .quantity {
-
-            margin: 0 4px;
+        button {
+            width: 16px;
+            height: 16px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
         }
       }
 
       .photo {
         img {
-          max-width: 80px;
+          max-width: 35px;
         }
       }
 
       .description {
-        padding-left: 30px;
         box-sizing: border-box;
-        max-width: 50%;
+        width: 60%;
+        margin-bottom: 15px;
 
       }
 
-      .price {
+ 
         .amount {
           font-size: 16px;
           margin-left: 8px;
           vertical-align: middle;
+          position: absolute;
+          top: 50%;
+          right: 20px;
 
         }
-      }
     }
       .grand-total {
           font-size: 24px;
