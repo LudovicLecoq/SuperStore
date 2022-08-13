@@ -29,6 +29,7 @@
 
     import { mapState } from 'vuex';
     import ProductLikes from './ProductLikes.vue';
+    import { ref } from 'vue';
 
     
     export default {
@@ -41,6 +42,7 @@
         computed: mapState ([
             'productsInCart',
         ]),
+        
 
         methods: {
             addToCart (product) {
@@ -55,7 +57,12 @@
             removeFromCart (productId) {
                 this.$store.dispatch('removeFromCart', productId)
             }
+        },
+        setup(props){
+          const itemProd = ref(props.items);
+          return {itemProd}
         }
+        
     }
 </script>
 

@@ -28,7 +28,7 @@
     export default {
         components: { Categories, SearchBar },
         created() {
-            this.$store.dispatch('loadProducts')
+            this.$store.dispatch('loadSelectedProducts')
         }, 
         computed: mapState ([
             'productsInCart'

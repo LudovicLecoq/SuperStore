@@ -105,6 +105,7 @@ export default {
         height: 35px;
         width: 40%;
     }
+    
     .step-button:last-child{
         margin-left: 20%;
     }

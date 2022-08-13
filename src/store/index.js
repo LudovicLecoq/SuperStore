@@ -28,8 +28,16 @@ export default createStore({
             
         },
         loadSelectedProducts({ commit }, category) {
-            axios.get(`https://fakestoreapi.com/products/category/${category}`)
-            .then(response => commit('loadSelectedProducts',response.data));
+            if(!category){
+                axios.get(`https://fakestoreapi.com/products`)
+                .then(response => commit('loadSelectedProducts',response.data));
+                console.log('IF loadSelectedPro')
+            } else {
+                axios.get(`https://fakestoreapi.com/products/category/${category}`)
+                .then(response => commit('loadSelectedProducts',response.data));
+                console.log("loadSelectedProd");
+            }
+            console.log(category)
         }
     },
     mutations: {
@@ -55,6 +63,11 @@ export default createStore({
             state.selectedProducts = category;
             console.log(category);
         },
+    },
+    getters: {
+        loadData(state) {
+            return state.selectedProducts
+        }
     },
    
     modules: {

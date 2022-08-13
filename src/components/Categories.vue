@@ -1,32 +1,32 @@
 <template>
     <div class="categories-container">
-        <router-link to="/">Home</router-link>
-        <div class="categories"
+        <router-link to="/category">Home</router-link>
+        <!-- <div class="categories"
         v-for="(category, index) in this.allCategories" :key="index">
             <router-link :to="'/category/'+category" @click="loadSelectedProducts(category)">{{ category }}</router-link> 
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script>
 
-    import { mapState } from 'vuex';
+    // import { mapState } from 'vuex';
 
     export default {
         name: 'categories',
 
-         methods: {
-            loadSelectedProducts (category) {
-                this.$store.dispatch('loadSelectedProducts', category);
-                console.log("action =>",category)
-            },
-        },
-        created() {
-            this.$store.dispatch('loadAllCategories');
-        }, 
-        computed: mapState ([
-            'allCategories'
-        ]),
+        //  methods: {
+        //     loadSelectedProducts (category) {
+        //         this.$store.dispatch('loadSelectedProducts', category);
+        //         console.log("action =>",category)
+        //     },
+        // },
+        // created() {
+        //     this.$store.dispatch('loadAllCategories');
+        // }, 
+        // computed: mapState ([
+        //     'allCategories'
+        // ]),
     }
   
 </script>
