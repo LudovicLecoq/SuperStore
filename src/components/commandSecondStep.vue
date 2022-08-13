@@ -1,15 +1,18 @@
 <template>
-    <div class="secondstep">
-   
+    <div class="first-step">
+
+        <label class="label" for="user-adress">Address</label>
         <command-input v-model="thisUser.address" text='text'/>
-
+        <label class="label" for="postal-code">Postal code</label>
         <command-input v-model="thisUser.postalCode" text='text'/>
-
+        <label class="label" for="city">City</label>
         <command-input v-model="thisUser.city" text='text'/>
-
+        <label class="label" for="country">Country</label>
         <command-input v-model="thisUser.country" text='text'/>
-
-        <button type="button" :disabled="disabledButton" @click="next(thisUser, 2)">Next</button>
+        <div class="step-form-buttons">
+            <button type="button" class="step-button" @click="prev(0)">Prev</button>
+            <button type="button" class="step-button" :disabled="disabledButton" @click="next(thisUser, 2)">Next</button>
+        </div>
     </div>
 </template>
 
@@ -41,7 +44,11 @@ export default {
         next: {
             type: Function,
             required: true
-        }
+        },
+        prev: {
+            type: Function,
+            required: true
+        },
     },
     setup (props) {
         const thisUser = reactive({

@@ -30,7 +30,7 @@
 .command-steps-container {
     width: 75%;
     height: 125px;
-    margin: 0px auto 75px;
+    margin: 0px auto 15px;
     display: flex;
     justify-content: space-between;
 }

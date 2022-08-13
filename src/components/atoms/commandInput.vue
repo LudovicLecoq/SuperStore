@@ -17,6 +17,11 @@ export default {
 
 <style>
 .command-form-item {
-    margin-bottom: 30px;
+    margin: 5px auto 30px;
+    border: 1.5px solid rgba(44,62,80,1);
+    border-radius: 4px;
+    width: 300px;
+    height: 20px;
 }
+
 </style>

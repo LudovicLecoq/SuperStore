@@ -1,15 +1,18 @@
 <template>
     <div class="first-step">
 
-        <command-input v-model="thisUser.firstName" text='text'/>
-
+        <label class="label" for="firstname">First name</label>
+        <command-input v-model="thisUser.firstName" text='text' />
+        <label class="label" for="lastname">Last name</label>
         <command-input v-model="thisUser.lastName" text='text'/>
-
+        <label class="label" for="phone-number">Phone number</label>
         <command-input v-model="thisUser.phone" text='text'/>
-
+        <label class="label" for="email">E-mail</label>
         <command-input v-model="thisUser.email" text='email'/>
 
-        <button type="button" :disabled="disabledButton" @click="next(thisUser, 1)">Next</button>
+        <div class="step-button-container">
+            <button type="button" class="step-button" :disabled="disabledButton" @click="next(thisUser, 1)">Next</button>
+        </div>
 
     </div>
 </template>
@@ -55,7 +58,11 @@ export default {
             email: props.user.email,
         });
         const userRefs = toRefs(thisUser);
-        const disabledButton = ref(true);
+        const disabledButton = ref(
+            thisUser.firstName.length > 2 && 
+            thisUser.lastName.length > 2 &&
+            thisUser.email.length > 2 ? false : true
+        );
 
         watch([userRefs.firstName, userRefs.lastName, userRefs.email], function(newValues, oldValues){
             if(thisUser.firstName.length > 2 && thisUser.lastName.length > 2 && thisUser.email.length > 2){
@@ -75,8 +82,30 @@ export default {
 </script>
 
 <style>
-.first-step {
-    display: flex;
-    flex-direction: column;
-}
+    .first-step {
+        display: flex;
+        flex-direction: column;
+        width: 360px;
+        margin: 0 auto;
+    }
+    .label{
+        text-align: start;
+        font-size: 15px;
+        font-weight: 500;
+        padding-left: 35px;
+    }
+
+    .step-button-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .step-button{
+        margin-top: 40px;
+        height: 35px;
+        width: 40%;
+    }
+    .step-button:last-child{
+        margin-left: 20%;
+    }
 </style>
