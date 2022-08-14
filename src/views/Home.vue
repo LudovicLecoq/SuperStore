@@ -7,7 +7,7 @@
 <script>
 
     import { mapState, useStore } from 'vuex';
-    import {computed, watch, isRef, isReactive, reactive, toRefs, onUpdated} from 'vue';
+    import {computed} from 'vue';
     import Products from '../components/Products.vue';
     export default {
         components: { Products },
@@ -16,23 +16,9 @@
                 ]),
         setup() {
             const store = useStore()
-                const thing = computed(() => store.getters.loadData);
-                const arrayProd = reactive({
-                    value: computed(() => store.getters.loadData)
-                }) 
-                const ArrayProdRef = toRefs(arrayProd)
-            // const myItems = mapState(['products'])
-            console.log('setup=>',isRef(thing), ArrayProdRef.value, isReactive(thing) );
-
-            watch(ArrayProdRef.value, function(newValues, oldValues){
-            console.log("watch", newValues, oldValues);
-        });
-        onUpdated(() => {
-            console.log("update")
-        })
-
-            return {thing, store, arrayProd, ArrayProdRef}
-           
+            const thing = computed(() => store.getters.loadData);
+        
+            return { thing }
         }
     }
 </script>
