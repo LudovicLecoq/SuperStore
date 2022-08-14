@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-       <Products v-bind:items='thing' />
+       <Products v-bind:items='data' />
     </div>
 </template>
 
@@ -16,9 +16,9 @@
                 ]),
         setup() {
             const store = useStore()
-            const thing = computed(() => store.getters.loadData);
+            const data = computed(() => store.getters.loadData);
         
-            return { thing }
+            return { data }
         }
     }
 </script>
