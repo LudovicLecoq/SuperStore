@@ -17,7 +17,7 @@ import commandFirstStep from '../components/commandFirstStep.vue';
 import commandSecondStep from '../components/commandSecondStep.vue';
 import commandAllSteps from '../components/commandAllSteps.vue';
 
-import {reactive} from 'vue';
+import { reactive } from 'vue';
 export default {
     components: { commandFirstStep, commandSecondStep, commandAllSteps },
 

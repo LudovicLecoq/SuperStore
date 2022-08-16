@@ -6,8 +6,12 @@ export default createStore({
         products: [],
         productsInCart: [],
         allCategories: [],
-        selectedProducts: []
+        selectedProducts: [],
+        filterCategory: null,
+        filterStars: null,
+        filterPrice: null,
     }, 
+
     actions: {
         loadProducts({ commit }) {
             axios.get(`https://fakestoreapi.com/products`)
@@ -20,6 +24,15 @@ export default createStore({
 
         removeFromCart ({ commit }, productId) {
             commit('removeFromCart', productId);
+        },
+
+        setFilterStars ({ commit }, stars) {
+            commit('setFilterStars', stars);
+            commit('filterData')
+        },
+
+        filterData ({ commit }) {
+            commit('filterData');
         },
 
         loadAllCategories( {commit} ){
@@ -59,16 +72,43 @@ export default createStore({
             console.log(categories);
         },
 
+        setFilterStars(state, stars) {
+            state.filterStars = stars;
+            console.log(stars);
+        },
+
+        filterData(state) {
+
+            console.log("stars=>");
+
+            if(state.filterPrice){
+                console.log("filterprice",state.filterPrice)
+                let updatingData = state.selectedProducts.filter(item => item.price > state.filterPrice.min && item.price < state.filterPrice.max);
+                state.selectedProducts = updatingData;
+            } else if (state.filterStars){
+                console.log('filterData > stars')
+                let updatingData = state.selectedProducts.filter(item => item.rating.rate >= state.filterStars);
+                state.selectedProducts = updatingData;
+            }
+        console.log(state.selectedProducts)
+        },
+
         loadSelectedProducts(state, category) {
             state.selectedProducts = category;
+            state.filterCategory = category;
             console.log(category);
         },
     },
     getters: {
         loadData(state) {
             return state.selectedProducts
+        },
+
+        loadCategories(state) {
+            return state.allCategories
         }
     },
+
    
     modules: {
     }

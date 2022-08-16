@@ -1,16 +1,20 @@
 <template>
     <div class="home">
-       <Products v-bind:items='data' />
+        <filter-menu v-bind:filter='filterData' />
+        <Products v-bind:items='data' />
+        <button @click="filterData({max:200 , min:20})" ></button>
     </div>
 </template>
 
 <script>
 
     import { useStore } from 'vuex';
-    import {computed} from 'vue';
+    import { computed } from 'vue';
     import Products from '../components/Products.vue';
+    import FilterMenu from '../components/FilterMenu.vue';
+
     export default {
-        components: { Products },
+        components: { Products, FilterMenu },
         setup() {
             const store = useStore()
             const data = computed(() => store.getters.loadData);
@@ -22,7 +26,8 @@
 
 <style lang="scss">
 
-  
-
+    .home {
+        display: flex;
+    }
 
 </style>

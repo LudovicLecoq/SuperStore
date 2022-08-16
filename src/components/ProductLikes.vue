@@ -1,37 +1,28 @@
 <template>
-
-
     <div class="product-likes">
-        <div class="stars-container">
-            <img class="likes empty" src="../assets/five_stars_empty.png" alt="stars">
-            <div class="likes fill"  :style="{width: likesWidth(item)}" />
-        </div>
+        <stars-likes v-bind:item='item'/>
         <span class="rates-number">({{ item.count }})</span>
     </div>
 </template>
 
 <script>
- 
+    import starsLikes from '../components/atoms/starsLikes.vue';
+
     export default {
+        components: { starsLikes },
         props:[
             'item'
         ],
-        methods: {
-            likesWidth (item) {
-                const starTotal = 5;
-                const starPercentage =`${(item.rate / starTotal) * 100}%`;
-                return starPercentage;
-            }
-        }
+  
     }
 </script>
 
 <style>
-.product-likes {
-    width: 205px;
-    align-items: center;
-    font-size: 13px;
-}
+    .product-likes {
+        width: 205px;
+        align-items: center;
+        font-size: 13px;
+    }
 
 .rates-number {
     margin-left: 0px;

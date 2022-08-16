@@ -23,12 +23,13 @@
 <script>
     import { mapState } from 'vuex';
     import Categories from './components/Categories.vue';
-    import SearchBar from './components/SearchBar.vue'
+    import SearchBar from './components/SearchBar.vue';
 
     export default {
         components: { Categories, SearchBar },
         created() {
-            this.$store.dispatch('loadSelectedProducts')
+            this.$store.dispatch('loadSelectedProducts');
+            this.$store.dispatch('loadAllCategories')
         }, 
         computed: mapState ([
             'productsInCart'
