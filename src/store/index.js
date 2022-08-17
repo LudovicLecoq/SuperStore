@@ -7,6 +7,7 @@ export default createStore({
         productsInCart: [],
         allCategories: [],
         selectedProducts: [],
+        baseSelectedProducts: [],
         filterCategory: null,
         filterStars: null,
         filterPrice: null,
@@ -83,22 +84,25 @@ export default createStore({
 
             if(state.filterPrice){
                 console.log("filterprice",state.filterPrice)
-                let updatingData = state.selectedProducts.filter(item => item.price > state.filterPrice.min && item.price < state.filterPrice.max);
+                let updatingData = state.baseSelectedProducts.filter(item => item.price > state.filterPrice.min && item.price < state.filterPrice.max);
                 state.selectedProducts = updatingData;
             } else if (state.filterStars){
                 console.log('filterData > stars')
-                let updatingData = state.selectedProducts.filter(item => item.rating.rate >= state.filterStars);
+                let updatingData = state.baseSelectedProducts.filter(item => item.rating.rate >= state.filterStars);
                 state.selectedProducts = updatingData;
             }
         console.log(state.selectedProducts)
         },
 
-        loadSelectedProducts(state, category) {
-            state.selectedProducts = category;
-            state.filterCategory = category;
-            console.log(category);
+        loadSelectedProducts(state, data) {
+            state.selectedProducts = data;
+            state.baseSelectedProducts = data;
+            state.filterCategory = data;
+            state.filterStars = null;
+            console.log(data, "stars+>", state.filterStars);
         },
     },
+
     getters: {
         loadData(state) {
             return state.selectedProducts
@@ -106,6 +110,10 @@ export default createStore({
 
         loadCategories(state) {
             return state.allCategories
+        },
+
+        loadStarsFilter(state) {
+            return state.filterStars
         }
     },
 

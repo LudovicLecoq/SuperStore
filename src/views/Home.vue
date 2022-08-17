@@ -2,7 +2,6 @@
     <div class="home">
         <filter-menu v-bind:filter='filterData' />
         <Products v-bind:items='data' />
-        <button @click="filterData({max:200 , min:20})" ></button>
     </div>
 </template>
 
