@@ -27,10 +27,14 @@
 
     export default {
         components: { Categories, SearchBar },
-        created() {
+        beforeCreate() {
             this.$store.dispatch('loadSelectedProducts');
             this.$store.dispatch('loadAllCategories')
         }, 
+        // onMounted() {
+        //     this.$store.dispatch('loadSelectedProducts');
+        //     this.$store.dispatch('loadAllCategories')
+        // },
         computed: mapState ([
             'productsInCart'
         ]),

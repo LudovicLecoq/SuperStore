@@ -32,6 +32,11 @@ export default createStore({
             commit('filterData')
         },
 
+        setFilterPrice ({ commit }, price) {
+            commit('setFilterPrice', price);
+            commit('filterData')
+        },
+
         filterData ({ commit }) {
             commit('filterData');
         },
@@ -78,13 +83,18 @@ export default createStore({
             console.log(stars);
         },
 
+        setFilterPrice(state, price) {
+            state.filterPrice = price;
+            console.log(price);
+        },
+
         filterData(state) {
 
             console.log("stars=>");
 
             if(state.filterPrice){
                 console.log("filterprice",state.filterPrice)
-                let updatingData = state.baseSelectedProducts.filter(item => item.price > state.filterPrice.min && item.price < state.filterPrice.max);
+                let updatingData = state.baseSelectedProducts.filter(item => item.price > state.filterPrice.minPrice && item.price < state.filterPrice.maxPrice);
                 state.selectedProducts = updatingData;
             } else if (state.filterStars){
                 console.log('filterData > stars')

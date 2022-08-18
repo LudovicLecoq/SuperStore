@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <filter-menu v-bind:filter='filterData' />
+        <filter-menu />
         <Products v-bind:items='data' />
     </div>
 </template>
