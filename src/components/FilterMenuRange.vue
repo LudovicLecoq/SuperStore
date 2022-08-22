@@ -6,8 +6,7 @@
 
             <div class="slider">
                 <div class="progress" :style="{ left: styleMin, right:styleMax }"></div>
-            
-     
+        
             <input 
                 type="range" 
                 class="range-min range" 
@@ -26,10 +25,12 @@
             >
             </div>
         </div>
+
         <div class="hop">
             <h4> {{ min }} </h4>
             <h4> {{ max }} </h4>
         </div>
+        
         <button @click="submitPrice">GO</button>
     </div>
 </template>
@@ -40,7 +41,7 @@
 export default {
     setup() {
         const store = useStore();
-        const data = computed(() => store.getters.loadData);
+        const data = computed(() => store.getters.loadSelectedCategory);
         const minPrice = computed(()=>  Math.min(...data.value.map(el => el.price)));
         const maxPrice = computed(()=>  Math.max(...data.value.map(el => el.price)));
         const styleMin = ref(1);

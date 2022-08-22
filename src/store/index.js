@@ -46,6 +46,7 @@ export default createStore({
             .then(response => commit('loadAllCategories',response.data));
             
         },
+
         loadSelectedProducts({ commit }, category) {
             if(!category){
                 axios.get(`https://fakestoreapi.com/products`)
@@ -91,8 +92,11 @@ export default createStore({
         filterData(state) {
 
             console.log("stars=>");
-
-            if(state.filterPrice){
+            if(state.filterPrice && state.filterStars){
+                console.log("filterprice&stars")
+                let updatingData = state.baseSelectedProducts.filter(item => item.price > state.filterPrice.minPrice && item.price < state.filterPrice.maxPrice && item.rating.rate >= state.filterStars);
+                state.selectedProducts = updatingData;
+            } else if(state.filterPrice){
                 console.log("filterprice",state.filterPrice)
                 let updatingData = state.baseSelectedProducts.filter(item => item.price > state.filterPrice.minPrice && item.price < state.filterPrice.maxPrice);
                 state.selectedProducts = updatingData;
@@ -114,6 +118,10 @@ export default createStore({
     },
 
     getters: {
+        loadSelectedCategory(state){
+            return state.filterCategory
+        },
+        
         loadData(state) {
             return state.selectedProducts
         },

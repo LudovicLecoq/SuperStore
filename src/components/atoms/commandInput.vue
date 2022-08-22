@@ -6,7 +6,7 @@
 import { ref } from 'vue';
 export default {
     name:"commandInput",
-    props:['modelValue'],
+    props:['modelValue', 'text'],
     emits:['update:modelValue'],
     setup(props) {
         const newValue = ref(props.modelValue);

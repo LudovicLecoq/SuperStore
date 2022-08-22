@@ -1,20 +1,18 @@
 <template>
-    <div class="first-step">
+        <form class="first-step" @submit="next(thisUser, 1)">
+            <label class="label" for="firstname">First name</label>
+            <command-input v-model="thisUser.firstName" text='text' />
+            <label class="label" for="lastname">Last name</label>
+            <command-input v-model="thisUser.lastName" text='text'/>
+            <label class="label" for="phone-number">Phone number</label>
+            <command-input v-model="thisUser.phone" text='number'/>
+            <label class="label" for="email">E-mail</label>
+            <command-input v-model="thisUser.email" text='email'/>
+            <div class="step-button-container">
+                <button type="submit" class="step-button" :disabled="disabledButton">Next</button>
+            </div>
 
-        <label class="label" for="firstname">First name</label>
-        <command-input v-model="thisUser.firstName" text='text' />
-        <label class="label" for="lastname">Last name</label>
-        <command-input v-model="thisUser.lastName" text='text'/>
-        <label class="label" for="phone-number">Phone number</label>
-        <command-input v-model="thisUser.phone" text='text'/>
-        <label class="label" for="email">E-mail</label>
-        <command-input v-model="thisUser.email" text='email'/>
-
-        <div class="step-button-container">
-            <button type="button" class="step-button" :disabled="disabledButton" @click="next(thisUser, 1)">Next</button>
-        </div>
-
-    </div>
+        </form>
 </template>
 
 <script>
