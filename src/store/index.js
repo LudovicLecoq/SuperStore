@@ -11,6 +11,7 @@ export default createStore({
         filterCategory: null,
         filterStars: null,
         filterPrice: null,
+        filterSearch: null,
     }, 
 
     actions: {
@@ -37,6 +38,11 @@ export default createStore({
             commit('filterData')
         },
 
+        setFilterSearch({ commit }, search) {
+            commit('setFilterSearch', search);
+            commit('filterData')
+        },
+
         filterData ({ commit }) {
             commit('filterData');
         },
@@ -51,7 +57,7 @@ export default createStore({
             if(!category){
                 axios.get(`https://fakestoreapi.com/products`)
                 .then(response => commit('loadSelectedProducts',response.data));
-                console.log('IF loadSelectedPro')
+                console.log('IF loadSelectedPro');
             } else {
                 axios.get(`https://fakestoreapi.com/products/category/${category}`)
                 .then(response => commit('loadSelectedProducts',response.data));
@@ -76,36 +82,41 @@ export default createStore({
 
         loadAllCategories(state, categories) {
             state.allCategories = categories;
-            console.log(categories);
+            console.log("load all categories", categories);
         },
 
         setFilterStars(state, stars) {
             state.filterStars = stars;
-            console.log(stars);
+            console.log("stars filter", stars);
         },
 
         setFilterPrice(state, price) {
             state.filterPrice = price;
-            console.log(price);
+            console.log("price filter",price);
+        },
+
+        setFilterSearch(state, search) {
+            state.filterSearch = search;
+            console.log("filter search",search);
         },
 
         filterData(state) {
 
-            console.log("stars=>");
-            if(state.filterPrice && state.filterStars){
-                console.log("filterprice&stars")
-                let updatingData = state.baseSelectedProducts.filter(item => item.price > state.filterPrice.minPrice && item.price < state.filterPrice.maxPrice && item.rating.rate >= state.filterStars);
-                state.selectedProducts = updatingData;
-            } else if(state.filterPrice){
-                console.log("filterprice",state.filterPrice)
-                let updatingData = state.baseSelectedProducts.filter(item => item.price > state.filterPrice.minPrice && item.price < state.filterPrice.maxPrice);
-                state.selectedProducts = updatingData;
-            } else if (state.filterStars){
-                console.log('filterData > stars')
-                let updatingData = state.baseSelectedProducts.filter(item => item.rating.rate >= state.filterStars);
-                state.selectedProducts = updatingData;
+            let updatingData = state.baseSelectedProducts
+
+            if(state.filterPrice){
+                updatingData = updatingData.filter(item => item.price > state.filterPrice.minPrice && item.price < state.filterPrice.maxPrice);
             }
-        console.log(state.selectedProducts)
+            if (state.filterStars) {
+                updatingData = updatingData.filter(item => item.rating.rate >= state.filterStars)
+            } 
+            if (state.filterSearch) {
+                updatingData = updatingData.filter(item => item.title.toLowerCase().includes(state.filterSearch.toLowerCase()))
+            }
+            
+            state.selectedProducts = updatingData;
+    
+            console.log("filter data", state.selectedProducts)
         },
 
         loadSelectedProducts(state, data) {

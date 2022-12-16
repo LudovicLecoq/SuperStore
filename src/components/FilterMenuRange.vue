@@ -42,8 +42,8 @@ export default {
     setup() {
         const store = useStore();
         const data = computed(() => store.getters.loadSelectedCategory);
-        const minPrice = computed(()=>  Math.min(...data.value.map(el => el.price)));
-        const maxPrice = computed(()=>  Math.max(...data.value.map(el => el.price)));
+        const minPrice = computed(()=> data.value && Math.min(...data.value.map(el => el.price)));
+        const maxPrice = computed(()=> data.value && Math.max(...data.value.map(el => el.price)));
         const styleMin = ref(1);
         const styleMax = ref(1000);
         const max = ref (1000);
@@ -85,8 +85,8 @@ export default {
 
         const submitPrice = () => {
             const rangePrice = {
-                minPrice: min.value,
-                maxPrice: max.value
+                minPrice: min.value - 0.1,
+                maxPrice: max.value + 0.1
             }
             store.dispatch('setFilterPrice', rangePrice);       
         }
@@ -107,71 +107,71 @@ export default {
 
 <style scoped>
 
-.filter-menu-price {
-    width: 250PX;
-    height: 200px;
-    position: relative;
-}
+    .filter-menu-price {
+        width: 250PX;
+        height: 200px;
+        position: relative;
+    }
 
-.filter-menu-price-slider-container {
-    margin: auto;  
-}
+    .filter-menu-price-slider-container {
+        margin: auto;  
+    }
 
-.slider {
-    height: 5px;
-    border-radius: 5px;    
-    background: #ddd;
-    margin: 5px auto 0;
-    width: 175px;
-    position: relative;
-}
+    .slider {
+        height: 5px;
+        border-radius: 5px;    
+        background: #ddd;
+        margin: 5px auto 0;
+        width: 175px;
+        position: relative;
+    }
 
-.progress{
-    height: 5px;
-    left: 5px;
-    right: 5px;
-    position: absolute;
-    border-radius: 5px;
-    background: #17A288;   
-}
+    .progress{
+        height: 5px;
+        left: 5px;
+        right: 5px;
+        position: absolute;
+        border-radius: 5px;
+        background: #17A288;   
+    }
 
-.range-input{
-    position: relative;
-}
+    .range-input{
+        position: relative;
+    }
 
-.range {
-    position: absolute;
-    height: 5px;
-    width: 100%;
-    top: -1px;
-    left: 0px;
-    -webkit-appearance: none;
-    pointer-events: none;
-    background: transparent;
-}
+    .range {
+        position: absolute;
+        height: 5px;
+        width: 100%;
+        top: -1px;
+        left: 0px;
+        -webkit-appearance: none;
+        pointer-events: none;
+        background: transparent;
+    }
 
-.range-min {
-    left: -2px;
-}
+    .range-min {
+        left: -2px;
+    }
 
-input[type="range"]::-webkit-slider-thumb {
-    height: 17px;
-    width: 17px;
-    border-radius: 50%;
-    cursor: pointer;
-    pointer-events: auto;
-    -webkit-appearance: none;
-    background: #17A288;
-}
+    input[type="range"]::-webkit-slider-thumb {
+        height: 17px;
+        width: 17px;
+        border-radius: 50%;
+        cursor: pointer;
+        pointer-events: auto;
+        -webkit-appearance: none;
+        background: #17A288;
+    }
 
-input[type="range"]::-moz-range-thumb {
-    height: 17px;
-    width: 17px;
-    border-radius: 50%;
-    cursor: pointer;
-    pointer-events: auto;
-    -moz-appearance: none;
-    background: #17A288;
-}
+    input[type="range"]::-moz-range-thumb {
+        height: 17px;
+        width: 17px;
+        border-radius: 50%;
+        cursor: pointer;
+        pointer-events: auto;
+        -moz-appearance: none;
+        background: #17A288;
+    }
 
 </style>

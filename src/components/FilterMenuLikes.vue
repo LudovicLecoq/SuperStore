@@ -41,4 +41,8 @@
     .active {
         font-weight: bold;
     }
+
+    .filter-menu-likes-select{
+        cursor: pointer;
+    }
 </style>

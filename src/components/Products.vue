@@ -1,10 +1,7 @@
 <template>
     <div class="products">
 
-            <div 
-            v-for="(product, index) in this.items" :key="index"
-            class="product" :class="{inCart: isInCart(product)}" 
-            >
+            <div v-for="(product, index) in this.items" :key="index" class="product">
                 <div class="product-header">
                     <div class="product-image" :style="{backgroundImage: 'url(' + product.image +')'}"></div>
                 </div>
@@ -15,8 +12,8 @@
                     <div class="product-description-price">
                         <ProductLikes v-bind:item='product.rating' />
                         <p class="price">{{product.price.toFixed(2)}} $</p>
-                        <button v-if="!isInCart(product)" @click="addToCart(product)" >Add to cart</button>
-                        <button v-else class="remove" @click="removeFromCart(product.id)" >Remove from cart</button>
+                        <button @click="addToCart(product)" >Add to cart</button>
+                        <!-- <button v-else class="remove" @click="removeFromCart(product.id)" >Remove from cart</button> -->
                     </div>
                 </div>
                
@@ -59,16 +56,14 @@
             }
         },
         setup(props){
-          const itemProd = ref(props.items);
-          return {itemProd}
+            const itemProd = ref(props.items);
+            return {itemProd}
         }
         
     }
 </script>
 
 <style lang="scss">
-
-
 
     .products {
       display: flex;
