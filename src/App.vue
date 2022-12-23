@@ -17,7 +17,9 @@
         </div>
         <Categories />
     </div>
+  
     <router-view/>
+
 </template>
 
 <script>

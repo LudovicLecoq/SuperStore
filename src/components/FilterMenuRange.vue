@@ -85,8 +85,8 @@ export default {
 
         const submitPrice = () => {
             const rangePrice = {
-                minPrice: min.value - 0.1,
-                maxPrice: max.value + 0.1
+                minPrice: min.value ,
+                maxPrice: max.value+0.01 
             }
             store.dispatch('setFilterPrice', rangePrice);       
         }

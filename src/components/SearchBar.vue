@@ -27,16 +27,16 @@
             const onChange = (event) => {
                 // console.log(event.target.value);
                 loadSelectedProducts(event.target.value);
-                console.log("terms", searchTerm)
+                // console.log("terms", searchTerm)
             };
             
             const loadSelectedProducts = (category) => {
                 store.dispatch('loadSelectedProducts', category);
-                console.log("action =>",searchTerm)
+                // console.log("action =>",searchTerm)
             };
 
             const loadSearch = () => {
-                console.log("search load",searchTerm);
+                // console.log("search load",searchTerm);
                 store.dispatch('setFilterSearch', searchTerm); 
             }
             

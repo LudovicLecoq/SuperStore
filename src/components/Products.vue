@@ -1,7 +1,10 @@
 <template>
     <div class="products">
 
-            <div v-for="(product, index) in this.items" :key="index" class="product">
+            <div 
+            v-for="(product, index) in this.items" :key="index"
+            class="product" :class="{inCart: isInCart(product)}" 
+            >
                 <div class="product-header">
                     <div class="product-image" :style="{backgroundImage: 'url(' + product.image +')'}"></div>
                 </div>
@@ -31,9 +34,12 @@
     
     export default {
         name: 'Home',
-        components: { ProductLikes},
+        components: { ProductLikes },
         props:[
-            'items'
+            'items',
+            'isOpen',
+            'setIsOpen',
+            'setIsClosed'
         ],
         
         computed: mapState ([
@@ -45,6 +51,10 @@
             addToCart (product) {
                 product.quantity = 1;
                 this.$store.dispatch('addToCart', product);
+                this.setIsOpen(product);
+                setTimeout(() => {
+                  this.setIsClosed();
+                }, 5000);
             },
             
             isInCart (product) {
@@ -56,8 +66,8 @@
             }
         },
         setup(props){
-            const itemProd = ref(props.items);
-            return {itemProd}
+          const itemProd = ref(props.items);
+          return {itemProd}
         }
         
     }

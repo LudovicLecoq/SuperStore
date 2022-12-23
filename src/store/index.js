@@ -105,7 +105,7 @@ export default createStore({
             let updatingData = state.baseSelectedProducts
 
             if(state.filterPrice){
-                updatingData = updatingData.filter(item => item.price > state.filterPrice.minPrice && item.price < state.filterPrice.maxPrice);
+                updatingData = updatingData.filter(item => item.price >= state.filterPrice.minPrice && item.price <= state.filterPrice.maxPrice);
             }
             if (state.filterStars) {
                 updatingData = updatingData.filter(item => item.rating.rate >= state.filterStars)
