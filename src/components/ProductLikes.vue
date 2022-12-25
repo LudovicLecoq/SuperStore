@@ -22,6 +22,7 @@
         width: 205px;
         align-items: center;
         font-size: 13px;
+        z-index: 2;
     }
 
 .rates-number {

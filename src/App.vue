@@ -40,6 +40,7 @@
         computed: mapState ([
             'productsInCart'
         ]),
+        
     }
   
 </script>

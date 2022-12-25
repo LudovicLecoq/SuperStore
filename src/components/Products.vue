@@ -1,40 +1,37 @@
 <template>
     <div class="products">
-
-            <div 
-            v-for="(product, index) in this.items" :key="index"
-            class="product" :class="{inCart: isInCart(product)}" 
-            >
+            <modale :openModal="openModal" :toggleModale="toggleModale" :product="thisProduct"></modale>
+            <div v-for="(product, index) in this.items" :key="index" class="product" :class="{inCart: isInCart(product)}">
+            
                 <div class="product-header">
-                    <div class="product-image" :style="{backgroundImage: 'url(' + product.image +')'}"></div>
+                    <div class="product-image" :style="{backgroundImage: 'url(' + product.image +')'}" v-on:click="toggleModale(product)"></div>
                 </div>
                 <div class="product-description">
-                    <div class="product-description-title">
+                    <div class="product-description-title" v-on:click="toggleModale(product)">
                         <h4>{{ product.title }}</h4>
                     </div>
+                    
                     <div class="product-description-price">
                         <ProductLikes v-bind:item='product.rating' />
                         <p class="price">{{product.price.toFixed(2)}} $</p>
-                        <button @click="addToCart(product)" >Add to cart</button>
+                        <button @click="addToCart(product)"  class="product-article-button">Add to cart</button>
                         <!-- <button v-else class="remove" @click="removeFromCart(product.id)" >Remove from cart</button> -->
                     </div>
                 </div>
-               
             </div> 
 
         </div>
 </template>
 
 <script>
-
-    import { mapState } from 'vuex';
-    import ProductLikes from './ProductLikes.vue';
     import { ref } from 'vue';
-
+    import { mapState, useStore } from 'vuex';
+    import ProductLikes from './ProductLikes.vue';
+    import Modale from "./ProductsModaleArticle.vue";
     
     export default {
         name: 'Home',
-        components: { ProductLikes },
+        components: { ProductLikes, Modale },
         props:[
             'items',
             'isOpen',
@@ -45,31 +42,46 @@
         computed: mapState ([
             'productsInCart',
         ]),
-        
 
         methods: {
-            addToCart (product) {
-                product.quantity = 1;
-                this.$store.dispatch('addToCart', product);
-                this.setIsOpen(product);
-                setTimeout(() => {
-                  this.setIsClosed();
-                }, 5000);
-            },
-            
             isInCart (product) {
                 return this.productsInCart.find(item => item.id === product.id)
             }, 
-
-            removeFromCart (productId) {
-                this.$store.dispatch('removeFromCart', productId)
-            }
         },
+
         setup(props){
-          const itemProd = ref(props.items);
-          return {itemProd}
-        }
-        
+
+            const store = useStore();
+            const itemProd = ref(props.items);
+            const openModal = ref(false);
+            const thisProduct= ref(false);
+
+            const toggleModale = (product) => {
+                openModal.value = !this.openModal;
+                thisProduct.value = product;
+            }
+
+            const addToCart = (product) => {
+                const productsInCart = store.getters.loadProductsInCart;
+                console.log("productInCart",productsInCart);
+
+                if(productsInCart.includes(product)){
+                    console.log("oups", product);
+                    product.quantity = product.quantity + 1;
+                } else {
+                    product.quantity = 1;
+                    store.dispatch('addToCart', product);
+
+                    props.setIsOpen(product);
+                    setTimeout(() => {
+                    props.setIsClosed();
+                    }, 5000);
+                    console.log("add");
+                }
+            }
+            
+            return {itemProd, addToCart, toggleModale}
+        } 
     }
 </script>
 
@@ -173,8 +185,4 @@
         }
       }
     }
-
-  
-
-
 </style>

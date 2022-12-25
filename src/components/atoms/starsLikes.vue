@@ -17,7 +17,6 @@ export default {
     },
     setup() {
         const likesWidth = (item) => {
-            console.log(item)
             const starTotal = 5;
             const starPercentage =`${(item.rate / starTotal) * 100}%`;
             return starPercentage;

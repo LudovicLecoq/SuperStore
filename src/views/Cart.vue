@@ -2,30 +2,29 @@
     <div class="cart-command">
         <div class="items">
 
-        <div 
-            v-for="(product, index) in productsInCart" :key="index"
-        class="item">
-            
-            <div class="photo"><img :src="product.image" alt=""> </div>
-            <div class="item-container">
-                <div class="item-description">
-                    <span class="description"> {{product.title}} </span>
-                
-                    <div class="quantity">
-                        
-                        <div class="quantity-area">
-                            <button :disabled="product.quantity <= 1" @click="product.quantity--" >-</button>
-                            <span class="quantity-number"> {{product.quantity}} </span>
-                            <button @click="product.quantity++">+</button>
-                        </div>
-                        <div class="remove" @click="removeFromCart(product.id)" >Remove item{{product.quantity > 1 ?"s" : ""}} </div>
-                    </div>
+            <div v-for="(product, index) in productsInCart" :key="index" class="item">
+                <div class="photo">
+                    <img :src="product.image" alt="">
                 </div>
-                <span class="amount">{{ (product.price * product.quantity).toFixed(2) }} $ </span>
+                <div class="item-container">
+                    <div class="item-description">
+
+                        <span class="description">{{product.title}}</span>
+                        <div class="quantity">
+                            <div class="quantity-area">
+                                <button :disabled="product.quantity <= 1" @click="product.quantity--" >-</button>
+                                <span class="quantity-number"> {{product.quantity}} </span>
+                                <button @click="product.quantity++">+</button>
+                            </div>
+                            <div class="remove" @click="removeFromCart(product.id)" >Remove item{{product.quantity > 1 ?"s" : ""}} </div>
+                        </div>
+
+                    </div>
+                    <span class="amount">{{ (product.price * product.quantity).toFixed(2) }} $ </span>
+                </div>
             </div>
-           
-        </div>
-            <div class="total"> Total: US$ 22.30</div>
+
+            <div class="total">Total: US$ {{total}}</div>
         </div>
         <div class="link">
             <router-link :to="'/payment'"><button>Passer commande</button></router-link> 
@@ -34,19 +33,52 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex';
+    import { mapState, useStore } from 'vuex';
+    import { watch, ref, onMounted } from 'vue';
 export default {
     name: 'Cart',
-
-    methods: {
-        removeFromCart (productId) {
-            this.$store.dispatch('removeFromCart', productId)
-        }
-    },
 
     computed: mapState ([
         'productsInCart'
     ]),
+
+    setup() {
+
+        const store = useStore();
+        const total = ref(0);
+
+        watch(() => store.state.productsInCart, () => {
+            articleTotal();  
+        });
+
+        store.state.productsInCart.forEach(object => {
+            watch(() => object.quantity, () => {
+                articleTotal();  
+        })})
+
+        const articleTotal = () => {
+            const allTotalArticles = [0];
+            store.state.productsInCart.forEach(object => {
+                const objectTotal = object.price * object.quantity;
+                allTotalArticles.push(objectTotal);
+            });
+            totalCart(allTotalArticles);
+        };
+
+        const totalCart = (totalAllArticles) => {
+            total.value = Math.round(totalAllArticles.reduce((addValue, currentValue) => addValue + currentValue) * 100) / 100;
+        };
+
+        const removeFromCart = (productId) => {
+            store.dispatch('removeFromCart', productId);
+        };
+
+        onMounted(() => {
+            articleTotal();
+        });
+
+        return {removeFromCart, total}
+    },
 
     
 }

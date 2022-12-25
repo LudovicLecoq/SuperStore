@@ -129,6 +129,11 @@ export default createStore({
     },
 
     getters: {
+
+        loadProductsInCart(state){
+            return state.productsInCart
+        },
+
         loadSelectedCategory(state){
             return state.filterCategory
         },
