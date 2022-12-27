@@ -19,14 +19,16 @@
 
 <style>
     .product-likes {
-        width: 205px;
+        width: 120px;
         align-items: center;
         font-size: 13px;
         z-index: 2;
+        margin: auto;
+        margin-top: 20px;
     }
 
 .rates-number {
-    margin-left: 0px;
+    margin-left: 85px;
 }
 .stars-container {
     width: 80px ;

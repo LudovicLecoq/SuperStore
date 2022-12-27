@@ -1,7 +1,7 @@
 <template>
     <div class="command">
         <form class="command-form" @submit.prevent="submit">
-            <command-all-steps />
+            <command-all-steps :step="command.step"/>
             <div class="command-form-container">
                 <command-first-step v-bind:user='user' v-bind:next='nextStep'  v-if="command.step === 0"/>
                 <command-second-step v-bind:user='user' v-bind:next='nextStep' v-bind:prev='prevStep'  v-if="command.step === 1" />

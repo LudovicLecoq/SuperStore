@@ -35,14 +35,12 @@
     .categories-container {
         z-index: 10;
         padding: 6px 0 3px ;
-        margin-top: 75px;
-        position: fixed;
         height: 15px;
         top: 0;
         left: 0;
         width: 100%;
         text-align: center;
-        background-color: rgb(35, 47, 63);
+        background-color: rgb(48, 64, 85);
         color: white;
         display: flex;
         justify-content: space-around;

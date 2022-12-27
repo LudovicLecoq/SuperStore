@@ -1,15 +1,15 @@
 <template>
     <div class="command-steps-container">
-        <div class="command-steps">
+        <div class="command-steps" :class="{active: step === 0}" >
             25
         </div>
-        <div class="command-steps">
+        <div class="command-steps" :class="{active: step === 1}">
             50
         </div>
-        <div class="command-steps">
+        <div class="command-steps" :class="{active: step === 2}">
             75
         </div>
-        <div class="command-steps active">
+        <div class="command-steps" :class="{active: step === 3}">
             100
         </div>
     </div>
@@ -18,6 +18,7 @@
 <script>
     export default {
         name: "commandAllSteps",
+        props:['step'],
         
         setup() {
             
@@ -51,7 +52,6 @@
     border: 3px solid rgb(255,138,0);
     color: rgb(255,138,0);
     text-shadow:rgba(0,0,0,0.1) 2px 2px;
-       
 }
 
 </style>

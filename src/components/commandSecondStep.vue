@@ -13,6 +13,7 @@
             <button type="button" class="step-button" @click="prev(0)">Prev</button>
             <button type="submit" class="step-button" :disabled="disabledButton">Next</button>
         </div>
+        
     </form>
 </template>
 
