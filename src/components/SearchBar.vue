@@ -1,7 +1,7 @@
 <template>
     <div class="search">
-        <select class="search-select" @change="onChange($event)">
-            <option value="">Toutes nos catégories</option>
+        <select class="search-select" @change="onChange($event)" ref="select" :value="selectRef">
+            <option value="">All products</option>
             <option class="categories" v-for="(category, index) in this.allCategories" :key="index" :value="category">
                 {{category}}
             </option>
@@ -14,7 +14,7 @@
 <script>
 
    import { mapState, useStore } from 'vuex';
-   import { ref } from 'vue';
+   import { ref, watch } from 'vue';
 
     export default {
         name: 'searchBar',
@@ -23,7 +23,10 @@
         ]),
         
         setup() {
+
+            const selectRef = ref(null)
             const store = useStore();
+
             const onChange = (event) => {
                 // console.log(event.target.value);
                 loadSelectedProducts(event.target.value);
@@ -41,8 +44,12 @@
             }
             
             const searchTerm = ref('');
+
+            watch(() => store.state.filterCategory, () => {
+                selectRef.value = store.getters.loadCategorySelected;
+            });
             
-            return { onChange, loadSelectedProducts, store, searchTerm, loadSearch }
+            return { selectRef, onChange, loadSelectedProducts, store, searchTerm, loadSearch }
         },
 
         created() {

@@ -41,7 +41,7 @@
 export default {
     setup() {
         const store = useStore();
-        const data = computed(() => store.getters.loadSelectedCategory);
+        const data = computed(() => store.getters.loadFilteredCategory);
         const minPrice = computed(()=> data.value && Math.min(...data.value.map(el => el.price)));
         const maxPrice = computed(()=> data.value && Math.max(...data.value.map(el => el.price)));
         const styleMin = ref(1);
@@ -80,7 +80,6 @@ export default {
 
         const sliderStyleMin = (value) => {
             styleMin.value = `${((Number(value) - minPrice.value ) * 100 / maxPrice.value )}%`;
-            console.log(styleMin.value)
         }
 
         const submitPrice = () => {

@@ -6,6 +6,7 @@ export default createStore({
         products: [],
         productsInCart: [],
         allCategories: [],
+        selectedCategory: null,
         selectedProducts: [],
         baseSelectedProducts: [],
         filterCategory: null,
@@ -50,7 +51,6 @@ export default createStore({
         loadAllCategories( {commit} ){
             axios.get(`https://fakestoreapi.com/products/categories`)
             .then(response => commit('loadAllCategories',response.data));
-            
         },
 
         loadSelectedProducts({ commit }, category) {
@@ -63,6 +63,7 @@ export default createStore({
                 .then(response => commit('loadSelectedProducts',response.data));
                 console.log("loadSelectedProd");
             }
+            commit('loadSelectedCategory', category);
             console.log(category)
         }
     },
@@ -126,6 +127,14 @@ export default createStore({
             state.filterStars = null;
             console.log(data, "stars+>", state.filterStars);
         },
+
+        loadSelectedCategory(state, category){
+            if(!category) {
+                state.selectedCategory = "";
+            } else {
+                state.selectedCategory = category;
+            }
+        }
     },
 
     getters: {
@@ -134,7 +143,7 @@ export default createStore({
             return state.productsInCart
         },
 
-        loadSelectedCategory(state){
+        loadFilteredCategory(state){
             return state.filterCategory
         },
         
@@ -148,6 +157,10 @@ export default createStore({
 
         loadStarsFilter(state) {
             return state.filterStars
+        },
+
+        loadCategorySelected(state) {
+            return state.selectedCategory
         }
     },
 

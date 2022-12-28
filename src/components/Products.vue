@@ -42,11 +42,11 @@
             'productsInCart',
         ]),
 
-        methods: {
-            isInCart (product) {
-                return this.productsInCart.find(item => item.id === product.id)
-            }, 
-        },
+        // methods: {
+        //     isInCart (product) {
+        //         return this.productsInCart.find(item => item.id === product.id)
+        //     }, 
+        // },
 
         setup(props){
 
@@ -54,32 +54,31 @@
             const itemProd = ref(props.items);
             const openModal = ref(false);
             const thisProduct= ref(false);
+            const productsInCart = store.getters.loadProductsInCart;
 
             const toggleModale = (product) => {
                 openModal.value = !openModal.value;
                 thisProduct.value = product;
-                console.log("modale article", product)
             }
 
             const addToCart = (product) => {
-                const productsInCart = store.getters.loadProductsInCart;
-                console.log("productInCart",productsInCart);
-
                 if(productsInCart.includes(product)){
-                    console.log("oups", product);
                     product.quantity = product.quantity + 1;
                 } else {
                     product.quantity = 1;
                     store.dispatch('addToCart', product);
-
                     props.setIsOpen(product);
                     setTimeout(() => {
                     props.setIsClosed();
-                    }, 5000);
+                    }, 10000);
                 }
             }
+
+            const isInCart = (product) => {
+                return productsInCart.find(item => item.id === product.id)
+            }
             
-            return {itemProd, addToCart, toggleModale, openModal, thisProduct}
+            return {itemProd, addToCart, toggleModale, openModal, thisProduct, isInCart}
         } 
     }
 </script>
@@ -112,7 +111,7 @@
         }
 
         &.inCart {
-          border: 1px solid #007bff;
+          border: 1px solid rgb(253, 164, 62);
         }
         
         
@@ -161,7 +160,6 @@
         background: #fff;
         padding: 1px 0;
         border-radius: 4px 4px 0 0;
-        // border-bottom: 0.5px solid rgba(233, 233, 233, 0.7);
     }
 
     .product-description-price {

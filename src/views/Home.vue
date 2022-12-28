@@ -1,9 +1,9 @@
 <template>
-    <div class="home">
+    <div class="home" >
         <products-cart-modale v-bind:isOpen='isOpen' v-bind:itemAdd='itemAdd' />
-        <div class="products-container">
+        <div class="products-container" :class="{active: isOpen===true }">
             <filter-menu />
-            <Products v-bind:items='data' v-bind:setIsOpen='cartModaleIsOpen' v-bind:setIsClosed='cartModaleIsClosed' />
+            <Products v-bind:isOpen='isOpen' v-bind:items='data' v-bind:setIsOpen='cartModaleIsOpen' v-bind:setIsClosed='cartModaleIsClosed' />
         </div>
     </div>
 </template>
@@ -34,7 +34,10 @@
 
               const cartModaleIsClosed = () => {
                 isOpen.value = false;
-                itemAdd.value = null;
+                setTimeout(() => {
+                    itemAdd.value = null;
+                }, 1000);
+                
             }
         
             return { data, isOpen, cartModaleIsOpen, cartModaleIsClosed, itemAdd  }
@@ -47,11 +50,17 @@
     .home {
         display: flex;
         flex-direction: column;
+        position: relative;
     }
 
     .products-container {
         display: flex;
+        transition: all 0.7s ease-in-out;
+    }
 
+    .products-container.active {
+        transform: translateY(200px);
+        transition: all 0.7s ease-in-out;
     }
 
 </style>

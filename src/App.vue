@@ -67,7 +67,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: rgb(18, 25, 33);
     overflow: hidden;
     // max-width: 1280px;
     margin: 0 auto 0;
