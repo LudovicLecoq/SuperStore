@@ -1,7 +1,7 @@
 <template>
     <div class="footer">
         <div class="footer-backToTop">
-            Back to top
+           <button class="footer-backToTop-button" @click="scrollToTop">Back to top</button>
         </div>
             <div class="footer-content">
                 <div class="footer-content-section">
@@ -111,8 +111,14 @@
 <script>
 export default {
     setup() {
-        
+
+        const scrollToTop = () => {
+              window.scrollTo(0, 0)
+        }
+
+        return {scrollToTop}
     },
+    
 }
 </script>
 
@@ -140,6 +146,13 @@ export default {
         width: 100%;
     }
 
+    .footer-backToTop-button {
+        background: transparent;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 15px;
+    }
 
     .footer-content {
         width: 75%;
@@ -154,8 +167,7 @@ export default {
         font-weight: 800;
         margin-bottom: 20px;
         max-width: 200px;
-text-align: start;
-
+        text-align: start;
     }
 
     .footer-content-section-list{

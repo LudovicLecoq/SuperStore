@@ -1,9 +1,13 @@
 <template>
     <div class="filter-menu-price">
-        <h2> {{ minPrice }} </h2>
-        <h2> {{ maxPrice }} </h2>
+        <!-- <h2> {{ minPrice }} </h2>
+        <h2> {{ maxPrice }} </h2> -->
+        <p class="filter-menu-title">Price</p>
         <div class="filter-menu-price-slider-container">
-
+            <div class="filter-menu-price-slider-container-range">
+                <span> {{ min }} </span>
+                <span> {{ max }} </span>
+            </div>
             <div class="slider">
                 <div class="progress" :style="{ left: styleMin, right:styleMax }"></div>
         
@@ -24,14 +28,12 @@
                 @input="rangeMax($event)"
             >
             </div>
+            <button class="filter-menu-price-slider-container-range-button" @click="submitPrice">GO</button>
         </div>
 
-        <div class="hop">
-            <h4> {{ min }} </h4>
-            <h4> {{ max }} </h4>
-        </div>
+      
         
-        <button @click="submitPrice">GO</button>
+        
     </div>
 </template>
 
@@ -106,14 +108,22 @@ export default {
 
 <style scoped>
 
+    .filter-menu-price-slider-container-range {
+        display: flex;
+        justify-content: space-between;
+        margin-left: 12.7px;
+        margin-bottom: 10px;
+
+    }
+
     .filter-menu-price {
-        width: 250PX;
+        width: 200PX;
         height: 200px;
         position: relative;
     }
 
     .filter-menu-price-slider-container {
-        margin: auto;  
+        padding-right: 40px;
     }
 
     .slider {
@@ -121,17 +131,17 @@ export default {
         border-radius: 5px;    
         background: #ddd;
         margin: 5px auto 0;
-        width: 175px;
+        width: 140px;
         position: relative;
     }
 
     .progress{
-        height: 5px;
+        height: 4px;
         left: 5px;
         right: 5px;
         position: absolute;
         border-radius: 5px;
-        background: #17A288;   
+        background: rgb(48, 64, 85);   
     }
 
     .range-input{
@@ -140,7 +150,7 @@ export default {
 
     .range {
         position: absolute;
-        height: 5px;
+        height: 4px;
         width: 100%;
         top: -1px;
         left: 0px;
@@ -154,23 +164,32 @@ export default {
     }
 
     input[type="range"]::-webkit-slider-thumb {
-        height: 17px;
-        width: 17px;
+        height: 14px;
+        width: 14px;
         border-radius: 50%;
         cursor: pointer;
         pointer-events: auto;
         -webkit-appearance: none;
-        background: #17A288;
+        background: rgb(48, 64, 85);
     }
 
     input[type="range"]::-moz-range-thumb {
-        height: 17px;
-        width: 17px;
+        height: 14px;
+        width: 14px;
         border-radius: 50%;
         cursor: pointer;
         pointer-events: auto;
         -moz-appearance: none;
-        background: #17A288;
+        background: rgb(48, 64, 85);
+    }
+
+    .filter-menu-price-slider-container-range-button {
+        margin-top: 10px;
+        background: #fff;
+        color: rgb(48, 64, 85);
+        border: 1.5px solid rgb(48, 64, 85);
+        border-radius: 4px;
+        padding: 3px 10px;
     }
 
 </style>

@@ -1,6 +1,5 @@
 <template>
     <div class="products">
-        <modale :openModal="openModal" :toggleModale="toggleModale" :product="thisProduct"></modale>
         <div v-for="(product, index) in this.items" :key="index" class="product" :class="{inCart: isInCart(product)}">
             
             <div class="product-header">
@@ -26,40 +25,26 @@
     import { ref } from 'vue';
     import { mapState, useStore } from 'vuex';
     import ProductLikes from './ProductLikes.vue';
-    import Modale from "./ProductsModaleArticle.vue";
     
     export default {
         name: 'Home',
-        components: { ProductLikes, Modale },
+        components: { ProductLikes },
         props:[
             'items',
-            'isOpen',
             'setIsOpen',
-            'setIsClosed'
+            'setIsClosed',
+            'toggleModale'
         ],
         
         computed: mapState ([
             'productsInCart',
         ]),
 
-        // methods: {
-        //     isInCart (product) {
-        //         return this.productsInCart.find(item => item.id === product.id)
-        //     }, 
-        // },
-
         setup(props){
 
             const store = useStore();
             const itemProd = ref(props.items);
-            const openModal = ref(false);
-            const thisProduct= ref(false);
             const productsInCart = store.getters.loadProductsInCart;
-
-            const toggleModale = (product) => {
-                openModal.value = !openModal.value;
-                thisProduct.value = product;
-            }
 
             const addToCart = (product) => {
                 if(productsInCart.includes(product)){
@@ -78,7 +63,7 @@
                 return productsInCart.find(item => item.id === product.id)
             }
             
-            return {itemProd, addToCart, toggleModale, openModal, thisProduct, isInCart}
+            return {itemProd, addToCart, isInCart}
         } 
     }
 </script>
@@ -97,6 +82,7 @@
         box-sizing: border-box;
         border-radius: 4px;
         max-width: 280px;
+        max-height: 430px;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
         background: #fff;
         margin: 8px;
@@ -114,16 +100,12 @@
           border: 1px solid rgb(253, 164, 62);
         }
         
-        
-
         h4 {
           margin: 12px auto;
           font-size: 15px;
           max-width: 90%;
           font-weight: normal;
         }
-
- 
 
         p.price {
           font-size: 20px;

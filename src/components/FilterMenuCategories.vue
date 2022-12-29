@@ -1,9 +1,9 @@
 <template>
     <div class="filter-menu-categories">
-        <h5>Categories</h5>
-            <ul>
-                <li class="filter-menu-categorie" @click="setCategory(category)" :class="{ active: !currentCategoryRef }" >All products</li>
-                <li class="filter-menu-categorie" 
+        <p class="filter-menu-title">Categories</p>
+            <ul class="filter-menu-categories-list">
+                <li class="filter-menu-categories-item" @click="setCategory(category)" :class="{ active: !currentCategoryRef }" >All products</li>
+                <li class="filter-menu-categories-item" 
                     v-for="(category, index) in categories" 
                     :key="index" 
                     :class="{ active: currentCategoryRef === category }" 
@@ -44,10 +44,29 @@
 </script>
 
 <style >
-    .filter-menu-categorie{
+
+    .filter-menu-title {
+        margin-top: 30px;
+        text-align: start;
+        font-weight: bold;
+    }
+
+    .filter-menu-categories-list {
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 5px;
+        padding-left: 10px;
+        margin-bottom: 50px;
+    }
+
+    .filter-menu-categories-item {
         cursor: pointer;
     }
-    .filter-menu-categorie.active{
+
+    .filter-menu-categories-item.active {
         font-weight: bold;
     }
 </style>
