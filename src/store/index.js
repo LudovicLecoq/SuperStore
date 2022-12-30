@@ -5,6 +5,8 @@ export default createStore({
     state: {
         products: [],
         productsInCart: [],
+        totalPriceInCart: 0,
+        numberItemsInCart: 0,
         allCategories: [],
         selectedCategory: null,
         selectedProducts: [],
@@ -25,8 +27,20 @@ export default createStore({
             commit('addToCart', product);
         },
 
+        removeOneFromCart ({ commit }, product) {
+            commit('removeOneFromCart', product);
+        },
+
         removeFromCart ({ commit }, productId) {
             commit('removeFromCart', productId);
+        },
+
+        setTotalPriceInCart ({ commit }) {
+            commit( 'setTotalPriceInCart');
+        },
+
+        setNumberItemsInCart ({ commit } ) {
+            commit ( 'setNumberItemsInCart' )
         },
 
         setFilterStars ({ commit }, stars) {
@@ -57,14 +71,11 @@ export default createStore({
             if(!category){
                 axios.get(`https://fakestoreapi.com/products`)
                 .then(response => commit('loadSelectedProducts',response.data));
-                console.log('IF loadSelectedPro');
             } else {
                 axios.get(`https://fakestoreapi.com/products/category/${category}`)
                 .then(response => commit('loadSelectedProducts',response.data));
-                console.log("loadSelectedProd");
             }
             commit('loadSelectedCategory', category);
-            console.log(category)
         }
     },
     mutations: {
@@ -73,7 +84,16 @@ export default createStore({
         }, 
 
         addToCart (state, product) {
-            state.productsInCart.push(product);
+            if(state.productsInCart.includes(product)){
+                product.quantity = product.quantity + 1;
+            } else {
+                product.quantity = 1;
+                state.productsInCart.push(product);
+            }
+        },
+
+        removeOneFromCart (state, product) {
+                product.quantity = product.quantity - 1;
         },
 
         removeFromCart (state, productId) {
@@ -81,24 +101,41 @@ export default createStore({
             state.productsInCart = updatingCart;
         },
 
+        setTotalPriceInCart (state) {
+            const allTotalArticles = [0];
+            state.productsInCart.forEach(object => {
+                const objectTotal = object.price * object.quantity;
+                allTotalArticles.push(objectTotal);
+            });
+            state.totalPriceInCart = Math.round(allTotalArticles.reduce((addValue, currentValue) => addValue + currentValue) * 100) / 100;
+        },
+
+        setNumberItemsInCart (state) {
+            const totalItems = [];
+            if(state.productsInCart.length < 1){
+                state.numberItemsInCart = 0;
+            } else {
+                state.productsInCart.forEach(product => {    
+                    totalItems.push(product.quantity);
+                });
+                state.numberItemsInCart = totalItems.reduce((addValue, currentValue) => addValue + currentValue);
+            }
+        },
+
         loadAllCategories(state, categories) {
             state.allCategories = categories;
-            console.log("load all categories", categories);
         },
 
         setFilterStars(state, stars) {
             state.filterStars = stars;
-            console.log("stars filter", stars);
         },
 
         setFilterPrice(state, price) {
             state.filterPrice = price;
-            console.log("price filter",price);
         },
 
         setFilterSearch(state, search) {
             state.filterSearch = search;
-            console.log("filter search",search);
         },
 
         filterData(state) {
@@ -116,8 +153,6 @@ export default createStore({
             }
             
             state.selectedProducts = updatingData;
-    
-            console.log("filter data", state.selectedProducts)
         },
 
         loadSelectedProducts(state, data) {
@@ -125,7 +160,6 @@ export default createStore({
             state.baseSelectedProducts = data;
             state.filterCategory = data;
             state.filterStars = null;
-            console.log(data, "stars+>", state.filterStars);
         },
 
         loadSelectedCategory(state, category){
@@ -164,7 +198,4 @@ export default createStore({
         }
     },
 
-   
-    modules: {
-    }
 })

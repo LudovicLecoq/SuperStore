@@ -12,12 +12,12 @@
             
         </div>
         <div class="products-cart-modale-total">
-            <p> Cart Subtotal: {{totalCart}}€ </p>
+            <p> Cart Subtotal: {{total}}€ </p>
             <router-link class="products-cart-modale-total-link"  :to="'/cart'">
                 Go to Cart
             </router-link> 
             <router-link class="products-cart-modale-total-link" :to="'/payment'">
-                Proceed to checkout ( {{itemsNb && itemsNb }} item{{itemsNb > 1 ? "s" : ""}} )
+                Proceed to checkout ( {{totalItems && totalItems }} item{{totalItems > 1 ? "s" : ""}} )
             </router-link> 
         </div>
     </div>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    import { watch, ref } from 'vue';
+    import { computed } from 'vue';
     import { useStore } from 'vuex';
 
     export default {
@@ -35,31 +35,18 @@
             'itemAdd'
         ],
 
-        setup(props) {
-            const totalCart = ref();
-            const itemsNb = ref ();
+        setup() {
             const store = useStore();
 
-            const totalResult = () => {
-                const allTotalArticles = [0];
-                const totalItems = []
-                store.state.productsInCart.forEach(product => {    
-                    const objectTotal = product.price * product.quantity;
-                    allTotalArticles.push(objectTotal);
-                    totalItems.push(product.quantity);
-                    console.log("total calcul", product)
-                });
-                totalCart.value = Math.round(allTotalArticles.reduce((addValue, currentValue) => addValue + currentValue) * 100) / 100;
-                itemsNb.value = totalItems.reduce((addValue, currentValue) => addValue + currentValue);
-            }
+            const total = computed(() => {
+                return store.state.totalPriceInCart
+            })
 
-            watch(() => props.itemAdd, () => {
-                if(props.itemAdd){
-                    totalResult()
-                }
+            const totalItems = computed(() => {
+                return store.state.numberItemsInCart
             })
   
-            return {totalCart, itemsNb}
+            return {total, totalItems}
         },
     }
 </script>

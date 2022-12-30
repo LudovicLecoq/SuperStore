@@ -33,7 +33,8 @@
             'items',
             'setIsOpen',
             'setIsClosed',
-            'toggleModale'
+            'toggleModale',
+            'addToCart'
         ],
         
         computed: mapState ([
@@ -46,24 +47,11 @@
             const itemProd = ref(props.items);
             const productsInCart = store.getters.loadProductsInCart;
 
-            const addToCart = (product) => {
-                if(productsInCart.includes(product)){
-                    product.quantity = product.quantity + 1;
-                } else {
-                    product.quantity = 1;
-                    store.dispatch('addToCart', product);
-                    props.setIsOpen(product);
-                    setTimeout(() => {
-                    props.setIsClosed();
-                    }, 10000);
-                }
-            }
-
             const isInCart = (product) => {
                 return productsInCart.find(item => item.id === product.id)
             }
             
-            return {itemProd, addToCart, isInCart}
+            return {itemProd, isInCart}
         } 
     }
 </script>

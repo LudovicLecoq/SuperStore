@@ -12,11 +12,11 @@
                         <span class="description">{{product.title}}</span>
                         <div class="quantity">
                             <div class="quantity-area">
-                                <button :disabled="product.quantity <= 1" @click="product.quantity--" >-</button>
+                                <button :disabled="product.quantity <= 1" @click="removeOneItem(product)" >-</button>
                                 <span class="quantity-number"> {{product.quantity}} </span>
-                                <button @click="product.quantity++">+</button>
+                                <button @click="addItem(product)">+</button>
                             </div>
-                            <div class="remove" @click="removeFromCart(product.id)" >Remove item{{product.quantity > 1 ?"s" : ""}} </div>
+                            <div class="remove" @click="removeItem(product.id)" >Remove item{{product.quantity > 1 ?"s" : ""}} </div>
                         </div>
 
                     </div>
@@ -34,50 +34,35 @@
 
 <script>
     import { mapState, useStore } from 'vuex';
-    import { watch, ref, onMounted } from 'vue';
+    import { computed } from 'vue';
 export default {
     name: 'Cart',
 
     computed: mapState ([
-        'productsInCart'
+        'productsInCart',
     ]),
 
     setup() {
 
         const store = useStore();
-        const total = ref(0);
 
-        watch(() => store.state.productsInCart, () => {
-            articleTotal();  
-        });
+        const total = computed(() => {
+            return store.state.totalPriceInCart
+        })
 
-        store.state.productsInCart.forEach(object => {
-            watch(() => object.quantity, () => {
-                articleTotal();  
-        })})
+        const addItem = (product) => {
+            store.dispatch('addToCart', product);
+        }
 
-        const articleTotal = () => {
-            const allTotalArticles = [0];
-            store.state.productsInCart.forEach(object => {
-                const objectTotal = object.price * object.quantity;
-                allTotalArticles.push(objectTotal);
-            });
-            totalCart(allTotalArticles);
+        const removeOneItem = (product) => {
+            store.dispatch('removeOneFromCart', product);
         };
 
-        const totalCart = (totalAllArticles) => {
-            total.value = Math.round(totalAllArticles.reduce((addValue, currentValue) => addValue + currentValue) * 100) / 100;
-        };
-
-        const removeFromCart = (productId) => {
+        const removeItem = (productId) => {
             store.dispatch('removeFromCart', productId);
         };
 
-        onMounted(() => {
-            articleTotal();
-        });
-
-        return {removeFromCart, total}
+        return { addItem, removeOneItem, removeItem, total }
     },
 
     

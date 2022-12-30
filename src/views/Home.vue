@@ -3,19 +3,21 @@
         <product-article-modale 
             v-bind:openModal='openModal' 
             v-bind:product='thisProduct' 
-            v-bind:toggleModale='toggleModale' 
+            v-bind:toggleModale='toggleModale'
+            v-bind:addToCart='addToCart' 
         />
         <products-cart-modale 
             v-bind:isOpen='isOpen' 
             v-bind:itemAdd='itemAdd' 
         />
-        <div class="products-container" :class="{active: isOpen===true }">
+        <div class="products-container" :class="{active: isOpen === true }">
             <filter-menu />
             <Products  
                 v-bind:items='data' 
                 v-bind:setIsOpen='cartModaleIsOpen' 
                 v-bind:setIsClosed='cartModaleIsClosed' 
-                v-bind:toggleModale='toggleModale' 
+                v-bind:toggleModale='toggleModale'
+                v-bind:addToCart='addToCart' 
             />
         </div>
     </div>
@@ -41,6 +43,7 @@
             const itemAdd = ref(null);
             const openModal = ref(false);
             const thisProduct= ref(false);
+            const productsInCart = store.getters.loadProductsInCart;
 
             const toggleModale = (product) => {
                 openModal.value = !openModal.value;
@@ -53,25 +56,28 @@
                 console.log(itemAdd.value.title)
             }
 
-              const cartModaleIsClosed = () => {
+            const cartModaleIsClosed = () => {
                 isOpen.value = false;
                 setTimeout(() => {
                     itemAdd.value = null;
                 }, 1000);
             }
 
-            const productsInCart = store.getters.loadProductsInCart;
-
             const addToCart = (product) => {
                 if(productsInCart.includes(product)){
-                    product.quantity = product.quantity + 1;
-                } else {
-                    product.quantity = 1;
+                    // product.quantity = product.quantity + 1;
                     store.dispatch('addToCart', product);
+                } else {
+                    // product.quantity = 1;
+                    store.dispatch('addToCart', product);
+                    cartModaleIsOpen(product);
+                    setTimeout(() => {
+                        cartModaleIsClosed();
+                    }, 10000);
                 }
             }
         
-            return { data, toggleModale, openModal, thisProduct, isOpen, cartModaleIsOpen, cartModaleIsClosed, itemAdd, addToCart  }
+            return { data, toggleModale, openModal, thisProduct, isOpen, cartModaleIsOpen, cartModaleIsClosed, itemAdd, addToCart }
         }
     }
 </script>

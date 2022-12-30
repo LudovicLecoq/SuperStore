@@ -18,7 +18,7 @@
                 </div>
                 <div class="modale-article-right-container">
                     <p>en stock</p>
-                    <button class="modale-article-right-button">Add to Cart</button>
+                    <button v-on:click="addToCartFromModale(product)" class="modale-article-right-button">Add to Cart</button>
                 </div>
             </div>
             <div class="modale-article-bottom-container">
@@ -31,10 +31,19 @@
 
 <script>
         import ProductLikes from './ProductLikes.vue';
+
     export default {
         name: "Modale",
         components: { ProductLikes },
-        props: ["openModal", "toggleModale", "product"]
+        props: ["openModal", "toggleModale", "product", "addToCart"],
+        setup(props) {
+            const addToCartFromModale = (product) => {
+                props.toggleModale();
+                props.addToCart(product)    
+            }
+
+            return { addToCartFromModale }
+        }
     };
 </script>
 
@@ -110,11 +119,13 @@
     }
 
     .modale-article-right-container {
-        border: 1.5px solid rgb(211, 211, 211, 0.9) ;
+        border: 1.5px solid rgba(211, 211, 211, 0.9);
         width: 150px;
         height: 400px;
         padding: 0 35px;
         border-radius: 4px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+        background: #f8f8f8;
     }
 
     .modale-article-right-button {

@@ -27,28 +27,28 @@
         margin-top: 20px;
     }
 
-.rates-number {
-    margin-left: 85px;
-}
-.stars-container {
-    width: 80px ;
-    position: relative;
-}
+    .rates-number {
+        margin-left: 85px;
+    }
+    .stars-container {
+        width: 80px ;
+        position: relative;
+    }
 
-.likes {
-    position: absolute;
-    top: 0;
-    left: 0;
- 
-}
+    .likes {
+        position: absolute;
+        top: 0;
+        left: 0;
+    
+    }
 
-.empty {
-    z-index: 1;
-}
+    .empty {
+        z-index: 1;
+    }
 
-.fill {
-    height: 16px;
-    background-image: url('../assets/five_stars_fill.png');
-    z-index: 2;
-}
+    .fill {
+        height: 16px;
+        background-image: url('../assets/five_stars_fill.png');
+        z-index: 2;
+    }
 </style>
