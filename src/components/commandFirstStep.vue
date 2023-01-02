@@ -80,6 +80,7 @@ export default {
 </script>
 
 <style>
+
     .first-step {
         display: flex;
         flex-direction: column;

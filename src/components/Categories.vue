@@ -1,10 +1,11 @@
 <template>
     <div class="categories-container">
-        <router-link to="/category">Home</router-link>
-        <!-- <div class="categories"
-        v-for="(category, index) in this.allCategories" :key="index">
-            <router-link :to="'/category/'+category" @click="loadSelectedProducts(category)">{{ category }}</router-link> 
-        </div> -->
+        <router-link to="/">About SuperStore</router-link>
+        <router-link to="/">SuperStore Premium</router-link>
+        <router-link to="/">Delivery</router-link>
+        <router-link to="/">Sell on SuperStore</router-link>
+        <router-link to="/">SuperStore Business</router-link>
+        <router-link to="/">Terms of use</router-link>
     </div>
 </template>
 
@@ -14,19 +15,6 @@
 
     export default {
         name: 'categories',
-
-        //  methods: {
-        //     loadSelectedProducts (category) {
-        //         this.$store.dispatch('loadSelectedProducts', category);
-        //         console.log("action =>",category)
-        //     },
-        // },
-        // created() {
-        //     this.$store.dispatch('loadAllCategories');
-        // }, 
-        // computed: mapState ([
-        //     'allCategories'
-        // ]),
     }
   
 </script>

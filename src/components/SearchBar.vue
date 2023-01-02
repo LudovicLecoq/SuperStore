@@ -1,5 +1,5 @@
 <template>
-    <div class="search">
+    <form @submit.prevent="loadSearch" class="search">
         <select class="search-select" @change="onChange($event)" ref="select" :value="selectRef">
             <option value="">All products</option>
             <option class="categories" v-for="(category, index) in this.allCategories" :key="index" :value="category">
@@ -7,8 +7,10 @@
             </option>
         </select>
         <input type="text" class="search-input" v-model="searchTerm" placeholder="Enter your search term">
-        <button class="search-button" v-on:click="loadSearch">search</button>
-    </div>
+        <button class="search-button" v-on:click="loadSearch">
+            <img class="search-button-icon" src="../assets/magnifying_glass.png" alt="magnifying glass" >
+        </button>
+    </form>
 </template>
 
 <script>
@@ -26,27 +28,25 @@
 
             const selectRef = ref(null)
             const store = useStore();
+            const searchTerm = ref('');
 
             const onChange = (event) => {
-                // console.log(event.target.value);
                 loadSelectedProducts(event.target.value);
-                // console.log("terms", searchTerm)
             };
             
             const loadSelectedProducts = (category) => {
                 store.dispatch('loadSelectedProducts', category);
-                // console.log("action =>",searchTerm)
             };
 
             const loadSearch = () => {
-                // console.log("search load",searchTerm);
                 store.dispatch('setFilterSearch', searchTerm); 
             }
             
-            const searchTerm = ref('');
+           
 
             watch(() => store.state.filterCategory, () => {
                 selectRef.value = store.getters.loadCategorySelected;
+                searchTerm.value = "";
             });
             
             return { selectRef, onChange, loadSelectedProducts, store, searchTerm, loadSearch }
@@ -61,15 +61,11 @@
 
 <style>
 
-.red{
-    background-color: red;
-    width: 70px;
-    height: 30px;
-    color: white;
-}
-
     .search {
         width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .search-select {
@@ -77,7 +73,7 @@
         background: #f0eeee;
         width: auto;
         margin: 0;
-        padding: 0;
+        padding: 0 10px;
         height: 35px;
         border: none;
     }
@@ -85,7 +81,7 @@
     .search-input {
         width: 50%;
         margin: 0;
-        padding: 0;
+        padding: 0 10PX;
         height: 35px;
         border: none;
     }
@@ -97,4 +93,8 @@
         border-radius: 0 5px 5px 0;
     }
 
+    .search-button-icon {
+        max-width: 20px;
+        padding-right: 10px;
+    }
 </style>

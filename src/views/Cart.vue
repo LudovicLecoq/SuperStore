@@ -20,14 +20,14 @@
                         </div>
 
                     </div>
-                    <span class="amount">{{ (product.price * product.quantity).toFixed(2) }} $ </span>
+                    <span class="amount">{{ (product.price * product.quantity).toFixed(2) }} € </span>
                 </div>
             </div>
 
-            <div class="total">Total: US$ {{total}}</div>
+            <div class="total">Total: {{total.toFixed(2)}} €</div>
         </div>
         <div class="link">
-            <router-link :to="'/payment'"><button>Passer commande</button></router-link> 
+            <router-link :to="'/payment'"><button class="link-button">Proceed to checkout</button></router-link> 
         </div>
     </div>
 </template>
@@ -74,6 +74,7 @@ export default {
 .cart-command {
     padding: 60px 0; 
     width: 1000px;
+    margin: 0 auto;
 
     .items {
         min-width:  800px;
@@ -81,11 +82,12 @@ export default {
         margin: auto;
     .item {
         display: flex;
-        width: 80%;
+        width: 100%;
         justify-content: space-between;
         padding: 10px 0;
         border-bottom: 1px solid lightgrey;
         position: relative;
+
 
     .item-container {
         width: 90%;
@@ -94,6 +96,8 @@ export default {
         .item-description {
             display: flex;
             flex-direction: row;
+            align-items: center;
+            justify-content: center;
             height: 100%;
         }
 
@@ -139,8 +143,6 @@ export default {
       .description {
         box-sizing: border-box;
         width: 60%;
-        margin-bottom: 15px;
-
       }
 
  
@@ -149,20 +151,27 @@ export default {
           margin-left: 8px;
           vertical-align: middle;
           position: absolute;
-          top: 50%;
+          top: 40%;
           right: 20px;
 
         }
     }
-      .grand-total {
+      .total {
           font-size: 24px;
           font-weight: bold;
-          text-align: right;
-          margin-top: 8px;
+          margin-top: 16px;
       }
 
   }
 
 }
 
+.link-button {
+    margin-top: 16px;
+    background: rgb(253, 164, 62);
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    padding: 6px 16px;
+}
 </style>
