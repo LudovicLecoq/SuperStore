@@ -126,7 +126,7 @@
         padding: 35px 75px;
         position: fixed;
         height: 590px;
-        top: 15%;
+        top: 10%;
         background: #fff;
         display: flex;
         flex-direction: column;
