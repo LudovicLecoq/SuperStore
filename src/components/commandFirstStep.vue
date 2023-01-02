@@ -62,15 +62,13 @@ export default {
             thisUser.email.length > 2 ? false : true
         );
 
-        watch([userRefs.firstName, userRefs.lastName, userRefs.email], function(newValues, oldValues){
+        watch([userRefs.firstName, userRefs.lastName, userRefs.email], function(){
             if(thisUser.firstName.length > 2 && thisUser.lastName.length > 2 && thisUser.email.length > 2){
                 disabledButton.value = false;
-                console.log('user=>',thisUser)
             } else if (thisUser.firstName.length < 3 || thisUser.lastName.length < 3 || thisUser.email.length < 3){
                 disabledButton.value = true;
                 
             }
-            console.log("watch", newValues, oldValues);
         });
 
         return { thisUser, disabledButton }

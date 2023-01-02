@@ -13,7 +13,6 @@
                 <div class="product-description-price">
                     <p class="price">{{product.price.toFixed(2)}} €</p>
                     <button @click="addToCart(product)"  class="product-article-button">Add to cart</button>
-                    <!-- <button v-else class="remove" @click="removeFromCart(product.id)" >Remove from cart</button> -->
                 </div>
             </div>
         </div> 
@@ -63,6 +62,7 @@
         flex-wrap: wrap;
         justify-content: center;
         padding-top: 20px;
+        width: 900px;
     }
 
     .product {

@@ -35,6 +35,12 @@ export default createStore({
             commit('removeFromCart', productId);
         },
 
+        resetCart ({commit}) {
+            commit('resetCart');
+            commit( 'setTotalPriceInCart');
+            commit ( 'setNumberItemsInCart');
+        },
+
         setTotalPriceInCart ({ commit }) {
             commit( 'setTotalPriceInCart');
         },
@@ -99,6 +105,10 @@ export default createStore({
         removeFromCart (state, productId) {
             let updatingCart = state.productsInCart.filter(item => item.id !== productId);
             state.productsInCart = updatingCart;
+        },
+
+        resetCart (state) {
+            state.productsInCart = [];
         },
 
         setTotalPriceInCart (state) {

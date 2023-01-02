@@ -93,7 +93,6 @@ export default {
         }
 
         watch(prices, ()=> {
-            console.log("watch price!!");
             max.value = maxPrice.value;
             min.value = minPrice.value;
             sliderStyleMax(max.value);

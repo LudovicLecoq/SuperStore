@@ -173,5 +173,6 @@ export default {
     border-radius: 4px;
     color: #fff;
     padding: 6px 16px;
+    cursor: pointer;
 }
 </style>

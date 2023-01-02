@@ -15,8 +15,11 @@
 
 <script>
 
-   import { mapState, useStore } from 'vuex';
-   import { ref, watch } from 'vue';
+    import { mapState, useStore } from 'vuex';
+    import { ref, watch } from 'vue';
+
+    import { useRouter, useRoute} from 'vue-router';
+
 
     export default {
         name: 'searchBar',
@@ -29,6 +32,9 @@
             const selectRef = ref(null)
             const store = useStore();
             const searchTerm = ref('');
+            const router = useRouter();
+            const route = useRoute();
+           
 
             const onChange = (event) => {
                 loadSelectedProducts(event.target.value);
@@ -40,9 +46,14 @@
 
             const loadSearch = () => {
                 store.dispatch('setFilterSearch', searchTerm); 
+                if(route.path !== '/'){
+                    router.push('/');
+                }
+                setTimeout(() => {
+                     searchTerm.value = "";
+                }, 100);
+               
             }
-            
-           
 
             watch(() => store.state.filterCategory, () => {
                 selectRef.value = store.getters.loadCategorySelected;
@@ -53,7 +64,7 @@
         },
 
         created() {
-            this.store.dispatch('loadAllCategories');
+            this.store.dispatch('loadAllCategories'); 
         }, 
     
     }
@@ -91,10 +102,12 @@
         background: rgb(255,138,0);
         border: none;
         border-radius: 0 5px 5px 0;
+        cursor: pointer;
     }
 
     .search-button-icon {
         max-width: 20px;
         padding-right: 10px;
+        cursor: pointer;
     }
 </style>

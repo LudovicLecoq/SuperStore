@@ -44,7 +44,6 @@ export default {
 
     name: 'Command',
 
-
     setup () {
         const command = reactive ({
             step: 0,
@@ -74,8 +73,6 @@ export default {
         // }; 
         
         const nextStep = (value, step) => {
-            console.log("nextstep");
-            console.log('command=>', value);
             if(step < 3){
                 setUser(value, step);
             }  else if(step > 2) {
@@ -84,46 +81,37 @@ export default {
         };
 
         const prevStep = (step) => {
-            console.log("prevstep");
             command.step = step;
         };
 
         const setUser = (value, step) => {
-            console.log("setUser", step);
             if(step === 1){
-                console.log("step1");
                 user.firstname = value.firstName;
                 user.lastname = value.lastName;
                 user.email = value.email;
                 value.phone ? user.phone = value.phone : ''; 
             } else if (step === 2) {
-                console.log("step2");
                 user.address = value.address;
                 user.postalCode = value.postalCode;
                 user.city = value.city;
                 user.country = value.country;
             }
             command.step = step;
-            console.log(user)
         }
 
         const setCommand = (value, step) => {
-            console.log("setUser", step);
             if(step === 3){
-                console.log("step1");
                 user.firstname = value.firstName;
                 user.lastname = value.lastName;
                 user.email = value.email;
                 value.phone ? user.phone = value.phone : ''; 
             } else if (step === 4) {
-                console.log("step2");
                 user.address = value.address;
                 user.postalCode = value.postalCode;
                 user.city = value.city;
                 user.country = value.country;
             }
             command.step = step;
-            console.log(user, command)
         }
         return { command, user, nextStep, prevStep}
     }

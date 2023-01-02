@@ -61,13 +61,12 @@ export default {
         const userRefs = toRefs(thisUser);
         const disabledButton = ref(true);
 
-        watch([userRefs.address, userRefs.postalCode, userRefs.city, userRefs.country], function(newValues, oldValues){
+        watch([userRefs.address, userRefs.postalCode, userRefs.city, userRefs.country], function(){
             if(thisUser.address.length > 5 && thisUser.postalCode && thisUser.city.length > 2 && thisUser.country.length > 2){
                 disabledButton.value = false;
             } else if (thisUser.address.length < 6 || !thisUser.postalCode|| thisUser.city.length < 3 ||thisUser.country.length < 3){
                 disabledButton.value = true;
             }
-            console.log("watch", newValues, oldValues);
         });
 
         return { thisUser, disabledButton }

@@ -1,5 +1,5 @@
 <template>
-    <div class="home" >
+    <div class="home" :class="{active: isOpen === true }">
         <product-article-modale 
             v-bind:openModal='openModal' 
             v-bind:product='thisProduct' 
@@ -53,7 +53,6 @@
             const cartModaleIsOpen = (product) => {
                 isOpen.value = true;
                 itemAdd.value = product;
-                console.log(itemAdd.value.title)
             }
 
             const cartModaleIsClosed = () => {
@@ -88,6 +87,12 @@
         display: flex;
         flex-direction: column;
         position: relative;
+        transition: all 0.7s ease-in-out;
+    }
+
+    .home.active {
+        transition: all 0.7s ease-in-out;
+        margin-bottom: 200px;
     }
 
     .products-container {

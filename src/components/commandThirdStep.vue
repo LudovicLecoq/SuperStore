@@ -68,7 +68,7 @@
     
         <div class="step-form-buttons">
             <button type="button" class="step-button" @click="prev(0)">Prev</button>
-            <button type="submit" class="step-button" :disabled="!thisCommand.acceptedTerms || !thisCommand.acceptedPrivacy">Payment</button>
+            <button type="submit" class="step-button" :disabled="!thisCommand.acceptedTerms || !thisCommand.acceptedPrivacy" @click="resetCart()">Payment</button>
         </div>
     </form>
 </template>
@@ -76,7 +76,7 @@
 
 <script>
 import { reactive } from 'vue';
-import { mapState } from 'vuex';
+import { mapState, useStore } from 'vuex';
 
 export default {
     name: 'commandThirdStep',
@@ -120,6 +120,9 @@ export default {
         }
     },
     setup (props) {
+
+        const store = useStore();
+
         const thisCommand = reactive({
             delivery: props.command.delivery,
             deliveryTime: props.command.deliveryTime,
@@ -128,26 +131,30 @@ export default {
             acceptTerms: props.command.acceptTerms
         });
 
+        const resetCart = () => {
+            store.dispatch('resetCart');
+        }
 
-          const getExpressDeleveryDate = (time) => {
 
-                const currentDate = new Date();
+        const getExpressDeleveryDate = (time) => {
 
-                if(time === "express") {
-                    currentDate.setDate(currentDate.getDate() + 2);
-                } else {
+            const currentDate = new Date();
+
+            if(time === "express") {
+                currentDate.setDate(currentDate.getDate() + 2);
+            } else {
                     currentDate.setDate(currentDate.getDate() + 5);
-                }
-         
-                const day = currentDate.getDate();
-                const month = currentDate.getMonth() + 1;
-                const year = currentDate.getFullYear();
-                thisCommand.deliveryTime = `${day}/${month}/${year}`;
-
-                return `${day}/${month}/${year}`;
             }
+         
+            const day = currentDate.getDate();
+            const month = currentDate.getMonth() + 1;
+            const year = currentDate.getFullYear();
+            thisCommand.deliveryTime = `${day}/${month}/${year}`;
 
-        return { thisCommand, getExpressDeleveryDate }
+            return `${day}/${month}/${year}`;
+        }
+
+        return { thisCommand, getExpressDeleveryDate, resetCart }
     },
 
 }
