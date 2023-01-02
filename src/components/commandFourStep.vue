@@ -4,7 +4,7 @@
             <img src="../assets/store_logo.png" alt="store logo" class="complete-header-img">
         </div>
         <div class="complete-content">
-            <p>Thanks for this purchase, confirmation e-mail send at </p>
+            <p>Thank you for this purchase, a confirmation email has been sent to you. </p>
         </div>
 
 
@@ -13,34 +13,27 @@
 
 <script>
 
+import { reactive } from 'vue';
+
 export default {
     name: 'commandFourStep',
     components: {  },
     props:{
-        command: {
-            aggrementContract: {
-                type: Boolean,
-                required: true
-            },
-            payment: {
+        user: {
+            email: {
                 type: String,
                 required: true
             },
-            paymentAccepted: {
-                type: Boolean,
-                required: true
-            },  
+         
         },
-        next: {
-            type: Function,
-            required: true
-        }
     },
-    setup () {
+    setup (props) {
    
-     
+        const thisUser = reactive({
+            email: props.user.email,
+        });
 
-        return {  }
+        return { thisUser }
     },
 
 }
@@ -49,7 +42,7 @@ export default {
 <style lang="scss" scoped>
 
     .complete-header{
-        background: blue;
+        background-color: rgb(18, 25, 33);
         height: 150px;
         width: 100%;
         position: absolute;
@@ -65,6 +58,6 @@ export default {
     }
 
     .complete-content {
-        margin-top: 100px;
+        margin-top: 130px;
     }
 </style>

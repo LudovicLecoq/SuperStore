@@ -23,10 +23,7 @@
                     v-if="command.step === 2" 
                 />
                 <command-four-step 
-                    v-bind:user='user'
-                    v-bind:command='command' 
-                    v-bind:next='nextStep' 
-                    v-bind:prev='prevStep'  
+                    v-bind:user='user' 
                     v-if="command.step === 3" 
                 />
             </div>
@@ -71,10 +68,10 @@ export default {
             cart: [],
         });
 
-        const submit = () => {
-            console.log("submit button");
-            console.log('command=>',command);
-        }; 
+        // const submit = () => {
+        //     console.log("submit button");
+        //     console.log('command=>',command);
+        // }; 
         
         const nextStep = (value, step) => {
             console.log("nextstep");
@@ -128,7 +125,7 @@ export default {
             command.step = step;
             console.log(user, command)
         }
-        return { command, user, submit, nextStep, prevStep}
+        return { command, user, nextStep, prevStep}
     }
 }
 </script>

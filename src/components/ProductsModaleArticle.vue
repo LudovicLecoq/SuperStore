@@ -22,20 +22,22 @@
                 </div>
                 <div class="modale-article-right-container">
                     <div class="delivery">
-                        <p>Delivery:</p>
+                        <p class="delivery-time-title">Delivery</p>
                         <div class="delivery-time">
-                            <p class="delivery-time-item">Normal</p>
-                            <p class="delivery-time-item">delivered in 3 to 5 days</p>
-                            <p class="delivery-time-item">Estimated delivery: {{getExpressDeleveryDate("normal")}}</p>
+                            <p class="delivery-time-item">Normal (3 / 5 days)</p>
+          
+                            <p class="delivery-time-item-estimate">Estimated delivery {{getExpressDeleveryDate("normal")}}</p>
                         </div>
                         <div class="delivery-time">
-                            <p class="delivery-time-item">Express</p>
-                            <p class="delivery-time-item">delivered in 1 to 2 days</p>
-                            <p class="delivery-time-item">Estimated delivery: {{getExpressDeleveryDate("express")}}</p>
+                            <p class="delivery-time-item">Express (1 / 2 days)</p>
+
+                            <p class="delivery-time-item-estimate">Estimated delivery {{getExpressDeleveryDate("express")}}</p>
                         </div>
                     </div>
-                    <button v-on:click="addToCartFromModale(product)" class="modale-article-right-button">Add to Cart</button>
-                    <router-link :to="'/cart'"><button class="modale-article-right-button gocart">Go to Cart</button></router-link>
+                    <div class="modale-article-cart">
+                        <button v-on:click="addToCartFromModale(product)" class="modale-article-right-button">Add to Cart</button>
+                        <router-link :to="'/cart'"><button class="modale-article-right-button gocart">Go to Cart</button></router-link>
+                    </div>
                     <div class="marketplace">
                         <div class="marketplace-left">
                             <p class="marketplace-item">Ships from</p>
@@ -215,8 +217,23 @@
         margin-bottom: 20px;
     }
 
+    .delivery-time-title{
+        font-weight: bold;
+        font-size: 18px;
+        margin: 20px 0 30px;
+    }
+
+
     .delivery-time-item {
         margin: 0;
+    }
+
+    .delivery-time-item-estimate {
+        font-size: 13px;
+    }
+
+    .modale-article-cart {
+        margin: 40px 0 10px;
     }
 
     .marketplace {
