@@ -44,6 +44,7 @@
             const openModal = ref(false);
             const thisProduct= ref(false);
             const productsInCart = store.getters.loadProductsInCart;
+ 
 
             const toggleModale = (product) => {
                 openModal.value = !openModal.value;

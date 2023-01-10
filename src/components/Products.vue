@@ -1,5 +1,7 @@
 <template>
     <div class="products">
+        <div class="products-noResult" v-if="items.length < 1 && loading === false">No result</div>
+        <div class="products-loading" v-if="loading"><loading-products /> LOADING</div>
         <div v-for="(product, index) in this.items" :key="index" class="product" :class="{inCart: isInCart(product)}">
             
             <div class="product-header">
@@ -9,7 +11,7 @@
                 <div class="product-description-title" v-on:click="toggleModale(product)">
                     <h4>{{ product.title }}</h4>
                 </div>
-                <ProductLikes v-bind:item='product.rating' />
+                <product-likes v-bind:item='product.rating' />
                 <div class="product-description-price">
                     <p class="price">{{product.price.toFixed(2)}} €</p>
                     <button @click="addToCart(product)"  class="product-article-button">Add to cart</button>
@@ -21,13 +23,14 @@
 </template>
 
 <script>
-    import { ref } from 'vue';
+    import { ref, computed } from 'vue';
     import { mapState, useStore } from 'vuex';
     import ProductLikes from './ProductLikes.vue';
+    import LoadingProducts from './atoms/loadingProducts.vue'
     
     export default {
         name: 'Home',
-        components: { ProductLikes },
+        components: { ProductLikes, LoadingProducts },
         props:[
             'items',
             'setIsOpen',
@@ -45,12 +48,13 @@
             const store = useStore();
             const itemProd = ref(props.items);
             const productsInCart = store.getters.loadProductsInCart;
+            const loading = computed(() => store.getters.loadingStatus);
 
             const isInCart = (product) => {
                 return productsInCart.find(item => item.id === product.id)
             }
             
-            return {itemProd, isInCart}
+            return {itemProd, isInCart, loading}
         } 
     }
 </script>
@@ -165,5 +169,11 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+    }
+
+    .products-loading {
+        position: relative;
+        width: 100%;
+        height: 200px;
     }
 </style>

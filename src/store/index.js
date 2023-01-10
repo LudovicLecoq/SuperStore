@@ -15,6 +15,7 @@ export default createStore({
         filterStars: null,
         filterPrice: null,
         filterSearch: null,
+        loadingProducts: true,
     }, 
 
     actions: {
@@ -71,9 +72,11 @@ export default createStore({
         loadAllCategories( {commit} ){
             axios.get(`https://fakestoreapi.com/products/categories`)
             .then(response => commit('loadAllCategories',response.data));
+         
         },
 
         loadSelectedProducts({ commit }, category) {
+
             if(!category){
                 axios.get(`https://fakestoreapi.com/products`)
                 .then(response => commit('loadSelectedProducts',response.data));
@@ -87,6 +90,7 @@ export default createStore({
     mutations: {
         loadProducts(state, products) {
             state.products = products;
+            state.loadingProducts = false;
         }, 
 
         addToCart (state, product) {
@@ -170,6 +174,7 @@ export default createStore({
             state.baseSelectedProducts = data;
             state.filterCategory = data;
             state.filterStars = null;
+            state.loadingProducts = false;
         },
 
         loadSelectedCategory(state, category){
@@ -178,7 +183,7 @@ export default createStore({
             } else {
                 state.selectedCategory = category;
             }
-        }
+        },
     },
 
     getters: {
@@ -205,6 +210,10 @@ export default createStore({
 
         loadCategorySelected(state) {
             return state.selectedCategory
+        },
+
+        loadingStatus(state){
+            return state.loadingProducts
         }
     },
 
